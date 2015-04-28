@@ -2,7 +2,7 @@
   "name": "eudat-b2drop",
   "version": "0.0.1",
   "author": "eudat",
-  "summary": "module for automated b2drop deployment",
+  "summary": "module for automated owncloud deployment with b2drop overlay",
   "license": "Apache 2.0",
   "source": "https://github.com/EUDAT-B2DROP/b2drop-deployment.git",
   "project_page": "https://github.com/EUDAT-B2DROP/b2drop-deployment",
