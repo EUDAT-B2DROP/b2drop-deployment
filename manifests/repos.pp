@@ -17,7 +17,7 @@ class b2drop::repos {
     provider => git,
     source   => "https://github.com/${::b2drop::gitrepo_user_plugin}/b2share-bridge.git",
     user     => "${::owncloud::params::www_user}",
-    user     => "${::owncloud::params::www_group}",
+    group    => "${::owncloud::params::www_group}",
     require  => [ Class['::owncloud'], Package['git'] ],
   }
 
@@ -28,13 +28,19 @@ class b2drop::repos {
   else {
     $theme_ensure = 'present'
   }
+  file {"${::owncloud::params::documentroot}/themes":
+    ensure => 'directory',
+    owner  => "${::owncloud::params::www_user}",
+    group  => "${::owncloud::params::www_group}",
+  }
+
   vcsrepo { "${::owncloud::params::documentroot}/themes/eudat":
     ensure   => $theme_ensure,
     revision => 'master',
     provider => git,
     source   => "https://github.com/${::b2drop::gitrepo_user_theme}/b2drop-core.git",
     user     => "${::owncloud::params::www_user}",
-    user     => "${::owncloud::params::www_group}",
-    require  => [ Class['::owncloud'], Package['git'] ],
+    group    => "${::owncloud::params::www_group}",
+    require  => [ Class['::owncloud'], Package['git'], File["${::owncloud::params::documentroot}/themes"] ],
   }
 }

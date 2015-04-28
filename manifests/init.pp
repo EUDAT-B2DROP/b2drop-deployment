@@ -1,6 +1,16 @@
 # == Class: b2drop
 #
 # This class should provide the basic deployment of b2drop, with repos for b2drop theme and b2share bridge
+# ldap link and other more complex settings are deployment specific.
+#
+# Attention:
+# If selinux is enabled, one has to execute the following commands:
+# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/config'
+# restorecon '/var/www/html/owncloud/config'
+# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/apps'
+# restorecon '/var/www/html/owncloud/apps'
+# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/data'
+# restorecon '/var/www/html/owncloud/data'
 #
 # === Parameters
 #
@@ -35,5 +45,6 @@ class b2drop (
   validate_bool($autoupdate_plugin)
 
   class { '::owncloud':} ->
+  class { '::b2drop::misc':} ->
   class { '::b2drop::repos':}
 }
