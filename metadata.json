@@ -7,6 +7,19 @@
   "source": "https://github.com/EUDAT-B2DROP/b2drop-deployment.git",
   "project_page": "https://github.com/EUDAT-B2DROP/b2drop-deployment",
   "issues_url": "https://github.com/EUDAT-B2DROP/b2drop-deployment/issues",
+  "tags": [
+    "owncloud",
+    "eudat",
+    "b2drop"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
@@ -19,6 +32,12 @@
     {
       "name": "shoekstra-owncloud",
       "version_requirement": ">= 0.3.0"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
     }
   ]
 }

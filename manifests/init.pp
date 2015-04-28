@@ -2,6 +2,7 @@
 #
 # This class should provide the basic deployment of b2drop, with repos for b2drop theme and b2share bridge
 # ldap link and other more complex settings are deployment specific.
+# This module uses shoekstra-owncloud to setup owncloud repo, apache and mysql.
 #
 # Attention:
 # If selinux is enabled, one has to execute the following commands:
