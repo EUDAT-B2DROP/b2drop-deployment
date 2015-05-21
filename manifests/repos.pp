@@ -4,7 +4,7 @@ class b2drop::repos {
     ensure   => 'installed'
   }
 
-  # manage theme
+  # manage plugin
   if $::b2drop::autoupdate_plugin {
     $plugin_ensure = 'latest'
   }
@@ -21,7 +21,7 @@ class b2drop::repos {
     require  => [ Class['::owncloud'], Package['git'] ],
   }
 
-  # manage plugin
+  # manage theme
   if $::b2drop::autoupdate_theme {
     $theme_ensure = 'latest'
   }

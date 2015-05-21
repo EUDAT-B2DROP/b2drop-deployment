@@ -22,4 +22,15 @@ class b2drop::misc {
   package { $phpmodules:
     ensure => 'installed',
   }
+
+  #configure theme to be used
+
+  file { 'b2drop_theme_config':
+    path    => "${::owncloud::params::documentroot}/config/b2drop.config.php",
+    content => '<?php
+$CONFIG = array (
+  \'theme\' => \'eudat\',
+);
+',
+  }
 }
