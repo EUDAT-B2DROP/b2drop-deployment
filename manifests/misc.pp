@@ -29,7 +29,7 @@ class b2drop::misc {
     path    => "${::owncloud::params::documentroot}/config/b2drop.config.php",
     content => '<?php
 $CONFIG = array (
-  \'theme\' => \'eudat\',
+  \'theme\' => \'b2drop\',
 );
 ',
   }

@@ -22,22 +22,16 @@
   ],
   "dependencies": [
     {
-      "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 1.0.0"
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=1.0.0"
     },
     {
-      "name": "puppetlabs-vcsrepo",
-      "version_requirement": ">= 1.2.0"
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": ">=1.2.0"
     },
     {
-      "name": "shoekstra-owncloud",
-      "version_requirement": ">= 0.3.0"
-    }
-  ],
-  "requirements": [
-    {
-      "name": "puppet",
-      "version_requirement": "3.x"
+      "name": "shoekstra/owncloud",
+      "version_requirement": ">=0.3.0"
     }
   ]
 }

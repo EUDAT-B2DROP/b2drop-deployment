@@ -34,7 +34,7 @@ class b2drop::repos {
     group  => "${::owncloud::params::www_group}",
   }
 
-  vcsrepo { "${::owncloud::params::documentroot}/themes/eudat":
+  vcsrepo { "${::owncloud::params::documentroot}/themes/b2drop":
     ensure   => $theme_ensure,
     revision => 'master',
     provider => git,
