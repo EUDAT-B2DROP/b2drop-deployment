@@ -37,9 +37,11 @@
 # Copyright 2015 EUDAT2020
 #
 class b2drop (
-  $autoupdate_theme  = false,
-  $gitrepo_user_theme = 'EUDAT-B2DROP',
-  $autoupdate_plugin = false,
+  $autoupdate_theme    = false,
+  $branch_theme        = 'master',
+  $gitrepo_user_theme  = 'EUDAT-B2DROP',
+  $autoupdate_plugin   = false,
+  $branch_plugin       = 'master',
   $gitrepo_user_plugin = 'EUDAT-B2DROP',
 ){
   validate_bool($autoupdate_theme)

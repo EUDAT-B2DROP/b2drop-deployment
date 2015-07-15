@@ -13,7 +13,7 @@ class b2drop::repos {
   }
   vcsrepo { "${::owncloud::params::documentroot}/apps/eudat":
     ensure   => $plugin_ensure,
-    revision => 'master',
+    revision => $::b2drop::branch_plugin,
     provider => git,
     source   => "https://github.com/${::b2drop::gitrepo_user_plugin}/b2share-bridge.git",
     user     => "${::owncloud::params::www_user}",
@@ -36,7 +36,7 @@ class b2drop::repos {
 
   vcsrepo { "${::owncloud::params::documentroot}/themes/b2drop":
     ensure   => $theme_ensure,
-    revision => 'master',
+    revision => $::b2drop::branch_theme,
     provider => git,
     source   => "https://github.com/${::b2drop::gitrepo_user_theme}/b2drop-core.git",
     user     => "${::owncloud::params::www_user}",
