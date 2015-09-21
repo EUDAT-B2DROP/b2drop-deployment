@@ -33,17 +33,17 @@ $CONFIG = array (
 ',
   }
 
-  if $::operatingsystem == centos {
+  if $::operatingsystem == CentOS {
     selinux::fcontext{ 'owncloud_docroot_httpd_context':
-      context  => "httpd_sys_content_t",
-      pathname => "${::owncloud::params::documentroot}(/.*)?",
+      context  => "httpd_sys_rw_content_t",
+      pathname => "${::owncloud::datadirectory}(/.*)?",
       notify   => Exec['owncloud_set_docroot_httpd_context'],
-      require  => File["${::owncloud::params::documentroot}"]
+      require  => File["${::owncloud::datadirectory}"]
     }
     exec{ 'owncloud_set_docroot_httpd_context':
-      command     => "/sbin/restorecon -Rv ${::owncloud::params::documentroot}",
+      command     => "/sbin/restorecon -Rv ${::owncloud::datadirectory}",
       refreshonly => true,
-      require     => File["${::owncloud::params::documentroot}"]
+      require     => File["${::owncloud::datadirectory}"]
     }
   }
 }
