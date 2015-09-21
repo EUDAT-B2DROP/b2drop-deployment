@@ -24,7 +24,6 @@ class b2drop::misc {
   }
 
   #configure theme to be used
-
   file { 'b2drop_theme_config':
     path    => "${::owncloud::params::documentroot}/config/b2drop.config.php",
     content => '<?php
@@ -32,5 +31,19 @@ $CONFIG = array (
   \'theme\' => \'b2drop\',
 );
 ',
+  }
+
+  if $::operatingsystem == centos {
+    selinux::fcontext{ 'owncloud_docroot_httpd_context':
+      context  => "httpd_sys_content_t",
+      pathname => "${::owncloud::params::documentroot}(/.*)?",
+      notify   => Exec['owncloud_set_docroot_httpd_context'],
+      require  => File["${::owncloud::params::documentroot}"]
+    }
+    exec{ 'owncloud_set_docroot_httpd_context':
+      command     => "/sbin/restorecon -Rv ${::owncloud::params::documentroot}",
+      refreshonly => true,
+      require     => File["${::owncloud::params::documentroot}"]
+    }
   }
 }
