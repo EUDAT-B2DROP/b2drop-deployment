@@ -6,7 +6,8 @@ class b2drop::misc {
       "set default_charset UTF-8",
       "set default_socket_timeout 300",
       "set upload_max_filesize 8G",
-      "set post_max_size 8G"
+      "set post_max_size 8G",
+      "set expose_php Off"
     ];
   }
 
