@@ -1,4 +1,6 @@
-# b2drop
+# B2DROP deployment recipes for puppet
+
+[![Build Status](https://travis-ci.org/EUDAT-B2DROP/b2drop-puppet.svg?branch=master)](https://travis-ci.org/EUDAT-B2DROP/b2drop-puppet)
 
 #### Table of Contents
 
