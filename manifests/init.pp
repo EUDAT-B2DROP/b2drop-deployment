@@ -4,15 +4,6 @@
 # ldap link and other more complex settings are deployment specific.
 # This module uses shoekstra-owncloud to setup owncloud repo, apache and mysql.
 #
-# Attention:
-# If selinux is enabled, one has to execute the following commands:
-# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/config'
-# restorecon '/var/www/html/owncloud/config'
-# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/apps'
-# restorecon '/var/www/html/owncloud/apps'
-# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/data'
-# restorecon '/var/www/html/owncloud/data'
-#
 # === Parameters
 #
 # Document parameters here.
@@ -20,12 +11,20 @@
 # [*autoupdate_theme*]
 #   whether to autoupdate the theme via git repo
 #
+# [*branch_theme*]
+#   branch to use for the theme, e.g. owncloud7, owncloud8...
+#
+# [*gitrepo_user_theme*]
+#   the github user to which the repository for the theme belongs
+#
 # [*autoupdate_plugin*]
 #   whether to autoupdate the plugin via git repo
 #
-# === Examples
+# [*branch_plugin*]
+#   branch to use for the plugin
 #
-#  class { 'b2drop': }
+# [*gitrepo_user_plugin*]
+#   the github user to which the repository for the plugin belongs
 #
 # === Authors
 #

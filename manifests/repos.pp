@@ -1,3 +1,18 @@
+# == Class: b2drop::repos
+#
+# manage the git repositories inside of the owncloud theme and app folder
+#
+# === Parameters
+#
+# === Authors
+#
+# Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
+# Sander Apweiler <sa.apweiler@fz-juelich.de>
+#
+# === Copyright
+#
+# Copyright 2015 EUDAT2020
+#
 class b2drop::repos {
 
   package {'git':
