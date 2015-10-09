@@ -14,5 +14,10 @@ tmtags
 *.swp
 tags
 
+## Development
 .idea
-b2drop-deployment.iml
+
+## Testing
+Gemfile.lock
+vendor/
+spec/fixtures/
