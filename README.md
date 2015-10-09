@@ -48,6 +48,19 @@ The following snippet will enable a all in one machine (LAMP stack + owncloud) o
 
 The `b2drop` class configures apache, mysql, owncloud and the repositories for the b2drop extensions.
 
+## Example
+
+To deploy B2DROP on a host, just add 
+```
+include ::b2drop
+```
+to the node and to hiera:
+```
+mysql::server::remove_default_accounts: true
+owncloud::db_pass: 'somesecretpass'
+owncloud::datadirectory: '/owncloud/data'
+```
+
 ## Reference
 
 Here, list the classes, types, providers, facts, etc contained in your module.
@@ -62,3 +75,12 @@ We are focussing on CentOS, other operating systems should work as well.
 ## Development
 
 There are no formal requirements to participate.
+
+## Testing
+
+For testing, just execute 
+
+mkdir vendor
+export GEM_HOME=vendor
+bundle install
+bundle exec rake test
