@@ -29,10 +29,10 @@ class b2drop::misc {
   # configure caching
   case $::osfamily {
     'RedHat': {
-      $phpmodule_caching = [ 'php-pecl-apcu']
+      $phpmodule_caching = [ 'php-pecl-apcu', 'php-pecl-memcached' ]
     }
     'Debian': {
-      $phpmodule_caching = [ 'php-apcu']
+      $phpmodule_caching = [ 'php-apcu', 'php5-memcached' ]
     }
     default: {
       $phpmodule_caching = []
