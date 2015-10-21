@@ -28,10 +28,10 @@ class b2drop::misc {
 
   # configure caching
   case $::osfamily {
-    RedHat: {
+    'RedHat': {
       $phpmodule_caching = [ 'php-pecl-apcu']
     }
-    Debian: {
+    'Debian': {
       $phpmodule_caching = [ 'php-apcu']
     }
     default: {
@@ -42,7 +42,7 @@ class b2drop::misc {
     ensure => 'installed',
   }
 
-  class { 'memcached':
+  class { '::memcached':
     listen_ip => $::ipaddress_lo
   }
 
