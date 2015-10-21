@@ -1,6 +1,6 @@
 # == Class: b2drop::php
 #
-# do some common configuration, php hardening, selinux configuration, etc.
+# optimize php, also add new php version to centos 7 if admin wants this to happen.
 #
 # === Parameters
 #
@@ -68,6 +68,19 @@ class b2drop::php (
           require   => File[$gpg_path],
           logoutput => 'on_failure',
           before    => Yumrepo['webtatic','webtatic-debuginfo','webtatic-source'],
+        }
+
+        package { 'yum-plugin-replace':
+          ensure  => 'installed',
+          require => Exec['import-webtatic-gpgkey'],
+          notify  => Exec['substitute-php-php56w'],
+        }
+
+        exec { 'substitute-php-php56w':
+          refreshonly => true,
+          path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+          command     => 'yum replace php-common --replace-with=php56w-common',
+          require     => Package['yum-plugin-replace'],
         }
       }
       else {
