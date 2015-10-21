@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*manage_php*]
+#  if we are on CentOS7, manage php5.6 installation.
+#
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
@@ -13,7 +16,11 @@
 #
 # Copyright 2015 EUDAT2020
 #
-class b2drop::misc {
+class b2drop::misc (
+  $manage_php = false
+){
+  # manage php
+
   # optimize php
   augeas { 'php.ini':
     context => '/files/etc/php.ini/PHP',
@@ -26,19 +33,26 @@ class b2drop::misc {
     ];
   }
 
-  # configure caching
+  # configure additional package installation
   case $::osfamily {
     'RedHat': {
-      $phpmodule_caching = [ 'php-pecl-apcu', 'php-pecl-memcached' ]
+      if $manage_php {
+        $phpmodules = [ 'php56w-pecl-apcu', 'php56w-pecl-memcached', 'php56w-mysql' ]
+      }
+      else {
+        $phpmodules = [ 'php-pecl-apcu', 'php-pecl-memcached', 'php-mysql' ]
+      }
     }
     'Debian': {
-      $phpmodule_caching = [ 'php-apcu', 'php5-memcached' ]
+      $phpmodules = [ 'php5-apcu', 'php5-memcached', 'php5-mysql' ]
     }
     default: {
-      $phpmodule_caching = []
+      fail('Operating system not supported with this module')
     }
   }
-  package { $phpmodule_caching:
+
+
+  package { $phpmodules:
     ensure => 'installed',
   }
 
