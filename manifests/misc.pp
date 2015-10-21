@@ -29,27 +29,28 @@ class b2drop::misc {
   # configure caching
   case $::osfamily {
     RedHat: {
-      $phpmodule_caching = [ 'php-pecl-apc']
+      $phpmodule_caching = [ 'php-pecl-apcu']
     }
     Debian: {
-      $phpmodule_caching = [ 'php-apc']
+      $phpmodule_caching = [ 'php-apcu']
     }
     default: {
       $phpmodule_caching = []
     }
   }
-
   package { $phpmodule_caching:
     ensure => 'installed',
   }
+
   class { 'memcached':
     listen_ip => $::ipaddress_lo
   }
+
   file { 'owncloud_memcache_config':
     path    => "${::owncloud::params::documentroot}/config/cache.config.php",
     content => '<?php
 $CONFIG = array (
-  \'memcache.local\' => \'\\OC\\Memcache\\APC\',
+  \'memcache.local\' => \'\\OC\\Memcache\\APCu\',
   \'memcache.distributed\' =>\'\\OC\\Memcache\\Memcached\',
   \'memcached_servers\' => array(
     array(\'localhost\', 11211),
