@@ -50,8 +50,8 @@ class b2drop::misc {
     path    => "${::owncloud::params::documentroot}/config/cache.config.php",
     content => '<?php
 $CONFIG = array (
-  \'memcache.local\' => \'\\OC\\Memcache\\APCu\',
-  \'memcache.distributed\' =>\'\\OC\\Memcache\\Memcached\',
+  \'memcache.local\' => \'\OC\Memcache\APCu\',
+  \'memcache.distributed\' =>\'\OC\Memcache\Memcached\',
   \'memcached_servers\' => array(
     array(\'localhost\', 11211),
     ),
