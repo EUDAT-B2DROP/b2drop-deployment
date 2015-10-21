@@ -79,7 +79,7 @@ class b2drop::php (
         exec { 'substitute-php-php56w':
           refreshonly => true,
           path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-          command     => 'yum replace php-common --replace-with=php56w-common',
+          command     => 'yum replace -y php-common --replace-with=php56w-common',
           require     => Package['yum-plugin-replace'],
         }
       }
