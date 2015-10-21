@@ -4,9 +4,6 @@
 #
 # === Parameters
 #
-# [*manage_php*]
-#  if we are on CentOS7, manage php5.6 installation.
-#
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
@@ -16,63 +13,7 @@
 #
 # Copyright 2015 EUDAT2020
 #
-class b2drop::misc (
-  $manage_php = false
-){
-  # manage php
-
-  # optimize php
-  augeas { 'php.ini':
-    context => '/files/etc/php.ini/PHP',
-    changes => [
-      'set default_charset UTF-8',
-      'set default_socket_timeout 300',
-      'set upload_max_filesize 8G',
-      'set post_max_size 8G',
-      'set expose_php Off'
-    ];
-  }
-
-  # configure additional package installation
-  case $::osfamily {
-    'RedHat': {
-      if $manage_php {
-        $phpmodules = [ 'php56w-pecl-apcu', 'php56w-pecl-memcached', 'php56w-mysql' ]
-      }
-      else {
-        $phpmodules = [ 'php-pecl-apcu', 'php-pecl-memcached', 'php-mysql' ]
-      }
-    }
-    'Debian': {
-      $phpmodules = [ 'php5-apcu', 'php5-memcached', 'php5-mysql' ]
-    }
-    default: {
-      fail('Operating system not supported with this module')
-    }
-  }
-
-
-  package { $phpmodules:
-    ensure => 'installed',
-  }
-
-  class { '::memcached':
-    listen_ip => $::ipaddress_lo
-  }
-
-  file { 'owncloud_memcache_config':
-    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
-    content => '<?php
-$CONFIG = array (
-  \'memcache.local\' => \'\OC\Memcache\APCu\',
-  \'memcache.distributed\' =>\'\OC\Memcache\Memcached\',
-  \'memcached_servers\' => array(
-    array(\'localhost\', 11211),
-    ),
-);
-',
-  }
-
+class b2drop::misc {
   # use cron instead of ajax.
   cron { 'owncloud':
     command => "php -f ${::owncloud::params::documentroot}/cron.php",
@@ -91,11 +32,6 @@ $CONFIG = array (
   }
 
   if $::osfamily == RedHat {
-    # missing php lib
-    $phpmodules = [ 'php-mysql']
-    package { $phpmodules:
-      ensure => 'installed',
-    }
     #selinux onfiguration
     selinux::fcontext{ 'owncloud_docroot_httpd_context':
       context  => 'httpd_sys_rw_content_t',

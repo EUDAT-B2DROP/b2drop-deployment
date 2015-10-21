@@ -48,6 +48,7 @@ class b2drop (
 
   class { '::owncloud':} ->
   class { '::b2drop::misc':} ->
+  class { '::b2drop::php':} ->
   class { '::b2drop::repos':}
 
   if ! defined(Class['mysql::server']) {
