@@ -104,9 +104,16 @@ class b2drop::php (
       'set upload_max_filesize 8G',
       'set post_max_size 8G',
       'set expose_php Off',
+      'rm apc.enable_cli',
+    ];
+  }
+  augeas { 'apcu.ini':
+    context => '/files/etc/php.d/apcu.ini',
+    changes => [
       'set apc.enable_cli 1',
     ];
   }
+
 
   package { $phpmodules:
     ensure => 'installed',
