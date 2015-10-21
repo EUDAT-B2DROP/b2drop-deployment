@@ -108,7 +108,7 @@ class b2drop::php (
     ];
   }
   augeas { 'apcu.ini':
-    context => '/files/etc/php.d/apcu.ini',
+    context => '/files/etc/php.d/apcu.ini/.anon',
     changes => [
       'set apc.enable_cli 1',
     ];
