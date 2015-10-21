@@ -26,17 +26,43 @@ class b2drop::misc {
     ];
   }
 
+  # configure caching
+  case $::osfamily {
+    RedHat: {
+      $phpmodule_caching = [ 'php-pecl-apc']
+    }
+    Debian: {
+      $phpmodule_caching = [ 'php-apc']
+    }
+    default: {
+      $phpmodule_caching = []
+    }
+  }
+
+  package { $phpmodule_caching:
+    ensure => 'installed',
+  }
+  class { 'memcached':
+    listen_ip => $::ipaddress_lo
+  }
+  file { 'owncloud_memcache_config':
+    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
+    content => '<?php
+$CONFIG = array (
+  \'memcache.local\' => \'\\OC\\Memcache\\APC\',
+  \'memcache.distributed\' =>\'\\OC\\Memcache\\Memcached\',
+  \'memcached_servers\' => array(
+    array(\'localhost\', 11211),
+    ),
+);
+',
+  }
+
   # use cron instead of ajax.
   cron { 'owncloud':
     command => "php -f ${::owncloud::params::documentroot}/cron.php",
     user    => $::owncloud::params::www_user,
     minute  => '*/10'
-  }
-
-  # missing libs for centos
-  $phpmodules = [ 'php-mysql']
-  package { $phpmodules:
-    ensure => 'installed',
   }
 
   #configure theme to be used
@@ -49,7 +75,13 @@ $CONFIG = array (
 ',
   }
 
-  if $::operatingsystem == CentOS {
+  if $::osfamily == RedHat {
+    # missing php lib
+    $phpmodules = [ 'php-mysql']
+    package { $phpmodules:
+      ensure => 'installed',
+    }
+    #selinux onfiguration
     selinux::fcontext{ 'owncloud_docroot_httpd_context':
       context  => 'httpd_sys_rw_content_t',
       pathname => "${::owncloud::datadirectory}(/.*)?",
@@ -61,7 +93,6 @@ $CONFIG = array (
       refreshonly => true,
       require     => File["${::owncloud::datadirectory}"]
     }
-
     selinux::fcontext{ 'owncloud_config_httpd_context':
       context  => 'httpd_sys_rw_content_t',
       pathname => "${::owncloud::params::documentroot}/config(/.*)?",
@@ -73,7 +104,6 @@ $CONFIG = array (
       refreshonly => true,
       require     => File["${::owncloud::params::documentroot}"]
     }
-
     selinux::fcontext{ 'owncloud_apps_httpd_context':
       context  => 'httpd_sys_rw_content_t',
       pathname => "${::owncloud::params::documentroot}/apps(/.*)?",

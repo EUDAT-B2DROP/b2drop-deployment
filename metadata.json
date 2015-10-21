@@ -32,7 +32,14 @@
     {
       "name": "shoekstra/owncloud",
       "version_requirement": ">=0.3.0"
+    },
+    {
+      "name": "jfryman/selinux",
+      "version_requirement": ">=0.2.5"
+    },
+    {
+      "name": "saz/memcached",
+      "version_requirement": ">=2.8.1"
     }
   ]
 }
-
