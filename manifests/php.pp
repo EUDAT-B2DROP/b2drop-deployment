@@ -61,7 +61,7 @@ class b2drop::php (
           source => 'puppet:///modules/b2drop/RPM-GPG-KEY-webtatic-el7',
         }
 
-        exec {  "import-webtatic-gpgkey":
+        exec { 'import-webtatic-gpgkey':
           path      => '/bin:/usr/bin:/sbin:/usr/sbin',
           command   => "rpm --import ${gpg_path}",
           unless    => "rpm -q gpg-pubkey-$(echo $(gpg --throw-keyids < ${gpg_path}) | cut --characters=11-18 | tr '[A-Z]' '[a-z]')",

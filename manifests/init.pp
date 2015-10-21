@@ -46,10 +46,10 @@ class b2drop (
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
 
-  class { '::owncloud':} ->
-  class { '::b2drop::misc':} ->
-  class { '::b2drop::php':} ->
-  class { '::b2drop::repos':}
+  include ::owncloud
+  include ::b2drop::misc
+  include ::b2drop::php
+  include ::b2drop::repos
 
   if ! defined(Class['mysql::server']) {
     include ::mysql::server
