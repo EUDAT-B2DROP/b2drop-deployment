@@ -67,7 +67,7 @@ class b2drop::php (
           unless    => "rpm -q gpg-pubkey-$(echo $(gpg --throw-keyids < ${gpg_path}) | cut --characters=11-18 | tr '[A-Z]' '[a-z]')",
           require   => File[$gpg_path],
           logoutput => 'on_failure',
-          before    => [ Yumrepo['webtatic','webtatic-debuginfo','webtatic-source'], Package[$phpmodules] ],
+          before    => Yumrepo['webtatic','webtatic-debuginfo','webtatic-source'],
         }
       }
       else {
