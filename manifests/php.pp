@@ -90,7 +90,8 @@ class b2drop::php (
       'set default_socket_timeout 300',
       'set upload_max_filesize 8G',
       'set post_max_size 8G',
-      'set expose_php Off'
+      'set expose_php Off',
+      'set apc.enable_cli 1',
     ];
   }
 
