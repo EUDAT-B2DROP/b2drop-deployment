@@ -104,7 +104,6 @@ class b2drop::php (
       'set upload_max_filesize 8G',
       'set post_max_size 8G',
       'set expose_php Off',
-      'rm apc.enable_cli',
     ];
   }
   augeas { 'apcu.ini':
@@ -114,24 +113,27 @@ class b2drop::php (
     ];
   }
 
-
-  package { $phpmodules:
-    ensure => 'installed',
-  }
-
-  class { '::memcached':
-    listen_ip => $::ipaddress_lo
-  }
+#  class { '::memcached':
+#    listen_ip => $::ipaddress_lo
+#  }
+#  file { 'owncloud_memcache_config':
+#    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
+#    content => '<?php
+#$CONFIG = array (
+#  \'memcache.local\' => \'\OC\Memcache\APCu\',
+#  \'memcache.distributed\' =>\'\OC\Memcache\Memcached\',
+#  \'memcached_servers\' => array(
+#    array(\'localhost\', 11211),
+#    ),
+#);
+#',
+#  }
 
   file { 'owncloud_memcache_config':
     path    => "${::owncloud::params::documentroot}/config/cache.config.php",
     content => '<?php
 $CONFIG = array (
   \'memcache.local\' => \'\OC\Memcache\APCu\',
-  \'memcache.distributed\' =>\'\OC\Memcache\Memcached\',
-  \'memcached_servers\' => array(
-    array(\'localhost\', 11211),
-    ),
 );
 ',
   }
