@@ -26,11 +26,19 @@ class b2drop::repos {
   else {
     $plugin_ensure = 'present'
   }
+
   vcsrepo { "${::owncloud::params::documentroot}/apps/b2share-bridge":
+    ensure   => 'absent',
+  }
+  vcsrepo { "${::owncloud::params::documentroot}/apps/eudat":
+    ensure   => 'absent',
+  }
+
+  vcsrepo { "${::owncloud::params::documentroot}/apps/b2sharebridge":
     ensure   => $plugin_ensure,
     revision => $::b2drop::branch_plugin,
     provider => git,
-    source   => "https://github.com/${::b2drop::gitrepo_user_plugin}/b2share-bridge.git",
+    source   => "https://github.com/${::b2drop::gitrepo_user_plugin}/b2sharebridge.git",
     user     => "${::owncloud::params::www_user}",
     group    => "${::owncloud::params::www_group}",
     require  => [ Class['::owncloud'], Package['git'] ],
