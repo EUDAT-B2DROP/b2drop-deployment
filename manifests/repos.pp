@@ -27,13 +27,6 @@ class b2drop::repos {
     $plugin_ensure = 'present'
   }
 
-  vcsrepo { "${::owncloud::params::documentroot}/apps/b2share-bridge":
-    ensure   => 'absent',
-  }
-  vcsrepo { "${::owncloud::params::documentroot}/apps/eudat":
-    ensure   => 'absent',
-  }
-
   vcsrepo { "${::owncloud::params::documentroot}/apps/b2sharebridge":
     ensure   => $plugin_ensure,
     revision => $::b2drop::branch_plugin,
