@@ -113,6 +113,10 @@ class b2drop::php (
     ];
   }
 
+  package {$phpmodules:
+    ensure => 'installed',
+  }
+
 #  class { '::memcached':
 #    listen_ip => $::ipaddress_lo
 #  }
