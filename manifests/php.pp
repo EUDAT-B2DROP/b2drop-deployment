@@ -95,6 +95,10 @@ class b2drop::php (
     }
   }
 
+
+  package {$phpmodules:
+    ensure => 'installed',
+  } ->
   # optimize php
   augeas { 'php.ini':
     context => '/files/etc/php.ini/PHP',
@@ -105,16 +109,12 @@ class b2drop::php (
       'set post_max_size 8G',
       'set expose_php Off',
     ];
-  }
+  } ->
   augeas { 'apcu.ini':
     context => '/files/etc/php.d/apcu.ini/.anon',
     changes => [
       'set apc.enable_cli 1',
     ];
-  }
-
-  package {$phpmodules:
-    ensure => 'installed',
   }
 
 #  class { '::memcached':
