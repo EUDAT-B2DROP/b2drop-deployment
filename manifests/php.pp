@@ -89,7 +89,7 @@ class b2drop::php (
       }
     }
     'Debian': {
-      $phpmodules = [ 'php5-apcu', php5-mysql' ]
+      $phpmodules = [ 'php5-apcu', 'php5-mysql' ]
     }
     default: {
       fail('Operating system not supported with this module')
