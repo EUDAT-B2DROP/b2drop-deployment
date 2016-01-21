@@ -24,7 +24,7 @@ class b2drop::php (
   case $::osfamily {
     'RedHat': {
       if $manage_php and $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == 7{
-        $phpmodules = [ 'php70w-pecl-apcu', 'php70w-pecl-memcached', 'php70w-mysql' ]
+        $phpmodules = [ 'php70w-pecl-apcu', 'php70w-mysql' ]
         $gpg_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7'
         yumrepo { 'webtatic':
           mirrorlist     => 'https://mirror.webtatic.com/yum/el7/$basearch/mirrorlist',
@@ -85,11 +85,11 @@ class b2drop::php (
         }
       }
       else {
-        $phpmodules = [ 'php-pecl-apcu', 'php-pecl-memcached', 'php-mysql' ]
+        $phpmodules = [ 'php-pecl-apcu', 'php-mysql' ]
       }
     }
     'Debian': {
-      $phpmodules = [ 'php5-apcu', 'php5-memcached', 'php5-mysql' ]
+      $phpmodules = [ 'php5-apcu', php5-mysql' ]
     }
     default: {
       fail('Operating system not supported with this module')
