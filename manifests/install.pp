@@ -36,8 +36,4 @@ class b2drop::install {
       }
     }
   }
-
-  package { $::owncloud::package_name:
-    ensure => present,
-  }
 }
