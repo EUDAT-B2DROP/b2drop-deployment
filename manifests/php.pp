@@ -134,12 +134,12 @@ class b2drop::php (
 #',
 #  }
 
-  file { 'owncloud_memcache_config':
-    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
-    content => '<?php
-$CONFIG = array (
-  \'memcache.local\' => \'\OC\Memcache\APCu\',
-);
-',
-  }
+#  file { 'owncloud_memcache_config':
+#    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
+#    content => '<?php
+#$CONFIG = array (
+#  \'memcache.local\' => \'\OC\Memcache\APCu\',
+#);
+#',
+#  }
 }
