@@ -44,7 +44,7 @@ task :contributors do
   system("git log --format='%aN' | sort -u > CONTRIBUTORS")
 end
 
-task :metadata do
+task :metadata_lint do
   sh "metadata-json-lint metadata.json"
 end
 
@@ -52,6 +52,6 @@ desc "Run syntax, lint, and spec tests."
 task :test => [
   :syntax,
   :lint,
-  #:spec,
-  :metadata,
+  :spec,
+  :metadata_lint,
 ]

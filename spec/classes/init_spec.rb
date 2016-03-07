@@ -1,7 +1,12 @@
 require 'spec_helper'
-describe 'b2drop' do
 
+describe 'b2drop' do
   context 'with defaults for all parameters' do
-    it { should contain_class('b2drop') }
+    it 'installs owncloud package' do
+        is_expected.to contain_package('owncloud').with(
+          :name   => 'owncloud',
+          :ensure => 'present',
+        )
+    end
   end
 end
