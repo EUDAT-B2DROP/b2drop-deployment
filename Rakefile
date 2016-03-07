@@ -1,8 +1,12 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet/version'
 require 'puppet/vendor/semantic/lib/semantic' unless Puppet.version.to_f < 3.6
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
+require 'metadata-json-lint/rake_task'
 
 # These gems aren't always present, for instance
 # on Travis with --without development
@@ -11,27 +15,22 @@ begin
 rescue LoadError
 end
 
-Rake::Task[:lint].clear
-PuppetLint::RakeTask.new :lint do |config|
-  config.ignore_paths = ["spec/**/*.pp", "vendor/**/*.pp"]
-  config.fail_on_warnings = true
-  config.log_format = '%{path}:%{linenumber}:%{KIND}: %{message}'
-  config.disable_checks = ["80chars", "class_inherits_from_params_class", "class_parameter_defaults", "only_variable_string"]
-end
-
-# Forsake support for Puppet 2.6.2 for the benefit of cleaner code.
-# http://puppet-lint.com/checks/class_parameter_defaults/
-PuppetLint.configuration.send('disable_class_parameter_defaults')
-# http://puppet-lint.com/checks/class_inherits_from_params_class/
-PuppetLint.configuration.send('disable_class_inherits_from_params_class')
-
 exclude_paths = [
   "bundle/**/*",
   "pkg/**/*",
   "vendor/**/*",
   "spec/**/*",
 ]
-PuppetLint.configuration.ignore_paths = exclude_paths
+
+Rake::Task[:lint].clear
+
+PuppetLint::RakeTask.new :lint do |config|
+  config.disable_checks = ["80chars", "arrow_alignment", "class_inherits_from_params_class", "class_parameter_defaults", "only_variable_string"]
+  config.fail_on_warnings = true
+  config.ignore_paths = exclude_paths
+  config.log_format = '%{path}:%{linenumber}:%{KIND}: %{message}'
+end
+
 PuppetSyntax.exclude_paths = exclude_paths
 
 desc "Run acceptance tests"
