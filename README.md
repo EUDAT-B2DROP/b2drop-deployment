@@ -30,14 +30,7 @@ adds the repositories for b2drop to the apps and themes folder.
 
 ### What b2drop affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-### Setup Requirements **OPTIONAL**
-
-No special requirements, only the required modules installed
+* apache, mysql, owncloud, php
 
 ### Beginning with b2drop
 
@@ -62,13 +55,6 @@ mysql::server::remove_default_accounts: true
 owncloud::db_pass: 'somesecretpass'
 owncloud::datadirectory: '/owncloud/data'
 ```
-
-## Reference
-
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
 
 ## Limitations
 

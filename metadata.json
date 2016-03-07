@@ -1,6 +1,6 @@
 {
   "name": "eudat-b2drop",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "eudat",
   "summary": "module for automated owncloud deployment with b2drop overlay",
   "license": "AGPL-3.0",
@@ -36,10 +36,12 @@
     {
       "name": "jfryman/selinux",
       "version_requirement": ">=0.2.5"
-    },
+    }
+  ],
+  "requirements": [
     {
-      "name": "saz/memcached",
-      "version_requirement": ">=2.8.1"
+      "name": "puppet",
+      "version_requirement": ">= 3.0.0 < 4.0.0"
     }
   ]
 }
