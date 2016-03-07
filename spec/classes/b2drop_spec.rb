@@ -33,18 +33,18 @@ describe 'b2drop' do
             is_expected.to contain_package('owncloud-server').with_ensure('present')
           end
 
-          # owncloud::config
+          # b2drop::repos
 
           it 'should create theme and plugin directory' do
-            is_expected.to contain_file("#{documentroot}/themes/b2drop").with(
-              ensure: 'directory',
-              owner: apache_user,
+            is_expected.to contain_vcsrepo("#{documentroot}/themes/b2drop").with(
+              ensure: 'present',
+              user: apache_user,
               group: apache_group
             )
 
-            is_expected.to contain_file("#{documentroot}/apps/b2sharebridge").with(
-              ensure: 'directory',
-              owner: apache_user,
+            is_expected.to contain_vcsrepo("#{documentroot}/apps/b2sharebridge").with(
+              ensure: 'present',
+              user: apache_user,
               group: apache_group
             )
           end

@@ -39,15 +39,6 @@ RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
 end
 
-desc "Populate CONTRIBUTORS file"
-task :contributors do
-  system("git log --format='%aN' | sort -u > CONTRIBUTORS")
-end
-
-task :metadata_lint do
-  sh "metadata-json-lint metadata.json"
-end
-
 desc "Run syntax, lint, and spec tests."
 task :test => [
   :syntax,
