@@ -1,8 +1,18 @@
 # == Class: b2drop
 #
-# This class should provide the basic deployment of b2drop, with repos for b2drop theme and b2share bridge
-# ldap link and other more complex settings are deployment specific.
-# This module uses shoekstra-owncloud to setup owncloud repo, apache and mysql.
+# This class should provide the basic deployment of b2drop, with repos for
+# b2drop theme and b2share bridge.
+#
+# ldap deployment and other more complex settings are deployment specific,
+# therefore not managed within this module.
+#
+# owncloud:
+# This module uses shoekstra-owncloud to setup owncloud, apache and mysql.
+# Currently we manage the owncloud repo by our own, because shoekstra is
+# referring to a outdated repo. We will use his module
+#
+# php:
+# A php7 repo is managed using b2drop::php.
 #
 # === Parameters
 #
@@ -29,6 +39,12 @@
 # [*manage_owncloud_repo*]
 #   whether to manage owncloud repository
 #
+# [*manage_owncloud_cron*]
+#   whether to manage owncloud cron or use aj
+#
+# [*manage_php*]
+#   whether to manage php installation and configurtion
+#
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
@@ -45,19 +61,26 @@ class b2drop (
   $autoupdate_plugin    = false,
   $branch_plugin        = 'master',
   $gitrepo_user_plugin  = 'EUDAT-B2DROP',
-  $manage_owncloud_repo = true
+  $manage_owncloud_repo = true,
+  $manage_owncloud_cron = true,
+  $manage_php           = true,
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
   validate_bool($manage_owncloud_repo)
+  validate_bool($manage_owncloud_cron)
+  validate_bool($manage_php)
 
-  include ::owncloud
-  include ::b2drop::misc
-  include ::b2drop::php
-  include ::b2drop::repos
-  include ::b2drop::install
-
-  if ! defined(Class['mysql::server']) {
-    include ::mysql::server
+  if $manage_php {
+    include ::b2drop::php
+    $owncloud_module_manage_php = !$manage_php
   }
+
+  class { '::owncloud':
+    manage_phpmysql => $owncloud_module_manage_php
+  }
+  include ::b2drop::misc
+  include ::b2drop::repos
+
+
 }

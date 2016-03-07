@@ -4,9 +4,6 @@
 #
 # === Parameters
 #
-# [*manage_php*]
-#  if we are on CentOS7, manage php5.6 installation.
-#
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
@@ -17,13 +14,11 @@
 # Copyright 2015 EUDAT2020
 #
 class b2drop::php (
-  $manage_php = false
 ){
-
   # configure additional package installation
   case $::osfamily {
     'RedHat': {
-      if $manage_php and $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == 7{
+      if $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == 7{
         $phpmodules = [ 'php70w-pecl-apcu', 'php70w-mysql' ]
         $gpg_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7'
         yumrepo { 'webtatic':
@@ -100,7 +95,6 @@ class b2drop::php (
   package {$phpmodules:
     ensure => 'installed',
   } ->
-  # optimize php
   augeas { 'php.ini':
     context => '/files/etc/php.ini/PHP',
     changes => [

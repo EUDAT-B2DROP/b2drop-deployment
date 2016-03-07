@@ -14,14 +14,19 @@
 # Copyright 2015 EUDAT2020
 #
 class b2drop::misc {
-  # use cron instead of ajax.
-  cron { 'owncloud':
-    command => "php -f ${::owncloud::params::documentroot}/cron.php",
-    user    => $::owncloud::params::www_user,
-    minute  => '*/10'
+  #
+  # owncloud cron
+  #
+  if $::b2drop::manage_owncloud_cron {
+    cron { 'owncloud':
+      command => "php -f ${::owncloud::params::documentroot}/cron.php",
+      user    => $::owncloud::params::www_user,
+      minute  => '*/10'
+    }
   }
-
-  #configure theme to be used
+  #
+  # configure theme to be used
+  #
   file { 'b2drop_theme_config':
     path    => "${::owncloud::params::documentroot}/config/b2drop.config.php",
     content => '<?php
@@ -31,8 +36,17 @@ $CONFIG = array (
 ',
   }
 
+  #
+  # mysql
+  #
+  if ! defined(Class['mysql::server']) {
+    include ::mysql::server
+  }
+
+  #
+  # selinux
+  #
   if $::osfamily == RedHat {
-    #selinux onfiguration
     selinux::fcontext{ 'owncloud_docroot_httpd_context':
       context  => 'httpd_sys_rw_content_t',
       pathname => "${::owncloud::datadirectory}(/.*)?",

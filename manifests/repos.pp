@@ -59,4 +59,27 @@ class b2drop::repos {
     group    => "${::owncloud::params::www_group}",
     require  => [ Class['::owncloud'], Package['git'], File["${::owncloud::params::documentroot}/themes"] ],
   }
+
+  # manage owncloud repo
+  if $::b2drop::manage_owncloud_repo {
+    case $::operatingsystem {
+      'CentOS': {
+        include ::epel
+
+        if $::operatingsystemmajrelease == '7' {
+          yumrepo { 'ownCloud:community':
+            name     => 'ownCloud_community',
+            descr    => "Latest stable community release of ownCloud (CentOS_CentOS-${::operatingsystemmajrelease})",
+            baseurl  => "https://download.owncloud.org/download/repositories/stable/CentOS_${::operatingsystemmajrelease}/",
+            gpgcheck => 1,
+            gpgkey   => "https://download.owncloud.org/download/repositories/stable/CentOS_${::operatingsystemmajrelease}/repodata/repomd.xml.key",
+            enabled  => 1,
+            before   => Package[$::owncloud::package_name],
+          }
+        }
+      }
+      default: {
+      }
+    }
+  }
 }
