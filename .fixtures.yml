@@ -1,7 +1,13 @@
 fixtures:
   repositories:
+    apache: "https://github.com/puppetlabs/puppetlabs-apache.git"
+    apt: "https://github.com/puppetlabs/puppetlabs-apt.git"
     concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
+    epel: "https://github.com/stahnma/puppet-module-epel.git"
     mysql: "https://github.com/puppetlabs/puppetlabs-mysql.git"
+    owncloud: "https://github.com/shoekstra/puppet-owncloud.git"
+    remi: "https://github.com/ckhall/puppet-module-remi.git"
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
+    vcsrepo: "https://github.com/puppetlabs/puppetlabs-vcsrepo.git"
   symlinks:
     b2drop: "#{source_dir}"
