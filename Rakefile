@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'rake/clean'
 
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet/version'
@@ -30,6 +31,14 @@ exclude_paths = [
   "vendor/**/*",
   "spec/**/*",
 ]
+
+clean_paths = [
+  "Gemfile.lock",
+  "vendor",
+  "spec/fixtures",
+]
+
+CLEAN.include(clean_paths)
 
 Rake::Task[:lint].clear
 
