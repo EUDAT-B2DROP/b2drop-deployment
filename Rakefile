@@ -14,6 +14,15 @@ begin
   require 'puppet_blacksmith/rake_tasks'
 rescue LoadError
 end
+begin
+  require 'rubocop/rake_task'
+rescue LoadError # rubocop:disable Lint/HandleExceptions
+end
+
+begin
+  require 'puppet-strings/rake_tasks'
+rescue LoadError # rubocop:disable Lint/HandleExceptions
+end
 
 exclude_paths = [
   "bundle/**/*",
@@ -32,6 +41,24 @@ PuppetLint::RakeTask.new :lint do |config|
 end
 
 PuppetSyntax.exclude_paths = exclude_paths
+
+begin
+  require 'parallel_tests/cli'
+  desc 'Run spec tests in parallel'
+  task :parallel_spec do
+    Rake::Task[:spec_prep].invoke
+    ParallelTests::CLI.new.run('-o "--format=progress" -t rspec spec/classes'.split)
+    Rake::Task[:spec_clean].invoke
+  end
+  desc 'Run syntax, lint, spec and metadata tests in parallel'
+  task :parallel_test => [
+    :syntax,
+    :lint,
+    :parallel_spec,
+    :metadata,
+  ]
+rescue LoadError # rubocop:disable Lint/HandleExceptions
+end
 
 desc "Run acceptance tests"
 RSpec::Core::RakeTask.new(:acceptance) do |t|

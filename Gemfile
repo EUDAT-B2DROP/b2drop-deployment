@@ -1,41 +1,44 @@
-source ENV['GEM_SOURCE'] || "https://rubygems.org"
+source ENV["GEM_SOURCE"] || "https://rubygems.org"
+
+group :test do
+  gem "rake"
+  if puppet_gem_version = ENV["PUPPET_GEM_VERSION"]
+    gem "puppet", ENV["PUPPET_GEM_VERSION"]
+  else
+    gem "puppet"
+  end
+  gem "puppet-lint"
+  gem "puppet-lint-param-docs"
+  gem "puppet-lint-absolute_classname-check"
+  gem "puppet-lint-absolute_template_path"
+  gem "puppet-lint-trailing_newline-check"
+  gem "puppet-lint-unquoted_string-check"
+  gem "puppet-lint-leading_zero-check"
+  gem "puppet-lint-variable_contains_upcase"
+  gem "puppet-lint-numericvariable"
+  gem "rspec-puppet"
+  gem "rspec-puppet-facts"
+  gem "puppet-syntax"
+  gem "puppetlabs_spec_helper"
+  gem "metadata-json-lint"
+  gem "rspec", "< 3.2.0" # Support for 1.8.7
+  gem "rspec-retry"
+  gem "serverspec"
+  gem "simplecov", ">= 0.11.0"
+  gem "simplecov-console"
+  gem "versionomy",                   :require => false
+end
 
 group :development do
-  gem 'puppet-lint-param-docs',               :require => false
-  gem 'puppet-lint-absolute_classname-check', :require => false
-  gem 'puppet-lint-absolute_template_path',   :require => false
-  gem 'puppet-lint-trailing_newline-check',   :require => false
-  gem 'puppet-lint-unquoted_string-check',    :require => false
-  gem 'puppet-lint-leading_zero-check',       :require => false
-  gem 'puppet-lint-variable_contains_upcase', :require => false
-  gem 'puppet-lint-numericvariable',          :require => false
+  gem "travis"
+  gem "travis-lint"
+  gem "beaker", "~> 2.0"
+  gem "beaker-puppet_install_helper", :require => false
+  gem "beaker-rspec"
+  gem "puppet-blacksmith"
+  gem "guard-rake"
+  gem "pry"
+  gem "yard"
+  gem "parallel_tests" # requires at least Ruby 1.9.3
+  gem "rubocop", :require => false # requires at least Ruby 1.9.2
 end
-
-group :unit_tests do
-  gem 'metadata-json-lint',           :require => false
-  gem 'puppetlabs_spec_helper',       :require => false
-  gem 'rspec-puppet',                 :require => false
-  gem 'rspec-puppet-facts',           :require => false
-  gem 'simplecov',                    :require => false
-  gem 'versionomy',                   :require => false
-end
-
-group :system_tests do
-  gem 'beaker-rspec',                 :require => false
-  gem 'beaker-puppet_install_helper', :require => false
-  gem 'serverspec',                   :require => false
-end
-
-if facterversion = ENV['FACTER_GEM_VERSION']
-  gem 'facter', facterversion, :require => false
-else
-  gem 'facter', :require => false
-end
-
-if puppetversion = ENV['PUPPET_GEM_VERSION']
-  gem 'puppet', puppetversion, :require => false
-else
-  gem 'puppet', :require => false
-end
-
-# vim:ft=ruby
