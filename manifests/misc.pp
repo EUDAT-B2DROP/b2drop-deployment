@@ -42,8 +42,8 @@ $CONFIG = array (
   if ($::b2drop::manage_tmp) {
     validate_string($::b2drop::manage_tmp)
     file { $::b2drop::manage_tmp:
-      path   => $::b2drop::manage_tmp,
       ensure => directory,
+      path   => $::b2drop::manage_tmp,
       mode   => '1777'
     }
     augeas { 'php.ini_tmp':
