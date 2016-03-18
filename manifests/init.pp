@@ -45,6 +45,9 @@
 # [*manage_php*]
 #   whether to manage php installation and configurtion
 #
+# [*manage_tmp*]
+#   whether to manage a custom php directory for file uploads
+#
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
@@ -64,6 +67,7 @@ class b2drop (
   $manage_owncloud_repo = true,
   $manage_owncloud_cron = true,
   $manage_php           = true,
+  $manage_tmp           = false,
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
