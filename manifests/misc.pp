@@ -39,7 +39,8 @@ $CONFIG = array (
   #
   # manage tmp next to the owncloud dir for easier file uploads
   #
-  if ($::b2drop::manage_tmp and validate_string($::b2drop::manage_tmp)) {
+  if ($::b2drop::manage_tmp) {
+    validate_string($::b2drop::manage_tmp)
     file { $::b2drop::manage_tmp:
       path   => $::b2drop::manage_tmp,
       ensure => directory,
