@@ -99,5 +99,17 @@ $CONFIG = array (
       refreshonly => true,
       require     => File["${::owncloud::params::documentroot}"]
     }
+    if $::b2drop::manage_tmp {
+      selinux::fcontext{ 'custom_tmp_context':
+        context  => 'tmp_t',
+        pathname => $::b2drop::manage_tmp,
+        notify   => Exec['set_custom_tmp_context'],
+      }
+      exec{ 'set_custom_tmp_context':
+        command     => "/sbin/restorecon -Rv ${::b2drop::manage_tmp}",
+        refreshonly => true,
+        require     => File[$::b2drop::manage_tmp]
+      }
+    }
   }
 }
