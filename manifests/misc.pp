@@ -66,7 +66,7 @@ class b2drop::misc {
   #
   # selinux
   #
-  if $::osfamily == RedHat {
+  if $::osfamily == 'RedHat' {
     selinux::fcontext{ 'owncloud_docroot_httpd_context':
       context  => 'httpd_sys_rw_content_t',
       pathname => "${::owncloud::datadirectory}(/.*)?",
