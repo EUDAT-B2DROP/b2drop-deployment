@@ -29,11 +29,12 @@ class b2drop::misc {
   #
   file { 'b2drop_theme_config':
     path    => "${::owncloud::params::documentroot}/config/b2drop.config.php",
-    content => '<?php
-$CONFIG = array (
+    content => "<?php
+\$CONFIG = array (
   \'theme\' => \'b2drop\',
+  \'lost_password_link\' => \'${::b2drop::reset_password_link}\'
 );
-',
+",
   }
 
   #

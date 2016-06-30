@@ -48,6 +48,9 @@
 # [*manage_tmp*]
 #   whether to manage a custom php directory for file uploads
 #
+# [*reset_password_link*]
+#   link that prompted when user types in wrong password
+#
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
@@ -68,6 +71,7 @@ class b2drop (
   $manage_owncloud_cron = true,
   $manage_php           = true,
   $manage_tmp           = false,
+  $reset_password_link  = 'https://b2drop.eudat.eu/pwm/public/ForgottenPassword'
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
