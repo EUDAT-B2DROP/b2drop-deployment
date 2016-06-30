@@ -30,7 +30,7 @@ describe 'b2drop' do
             is_expected.to contain_class('b2drop::php')
             is_expected.to contain_class('b2drop')
 
-            is_expected.to contain_package('owncloud-server').with_ensure('present')
+            is_expected.to contain_package('owncloud').with_ensure('present')
           end
 
           # b2drop::repos
