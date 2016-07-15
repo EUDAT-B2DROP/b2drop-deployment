@@ -52,6 +52,8 @@ class b2drop::misc {
       notify  => Class['::apache'],
       changes => [
         "set upload_tmp_dir ${::b2drop::manage_tmp}",
+        "set max_execution_time 360",
+        "set max_input_time 360",
       ];
     }
   }
