@@ -18,7 +18,7 @@ class b2drop::php (
   # configure additional package installation
   case $::osfamily {
     'RedHat': {
-      if $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == 7{
+      if $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == '7'{
         $phpmodules = [ 'php70w-pecl-apcu', 'php70w-mysql' ]
         $gpg_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7'
         yumrepo { 'webtatic':
