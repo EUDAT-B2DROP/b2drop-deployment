@@ -76,7 +76,7 @@ class b2drop::misc {
       require  => File["${owncloud::datadirectory}"]
     }
     exec{ 'owncloud_set_docroot_httpd_context':
-      command     => "/sbin/restorecon -Rv $owncloud::datadirectory}",
+      command     => "/sbin/restorecon -Rv ${owncloud::datadirectory}",
       refreshonly => true,
       require     => File["${owncloud::datadirectory}"]
     }
