@@ -71,36 +71,36 @@ class b2drop::misc {
   if $::osfamily == 'RedHat' {
     selinux::fcontext{ 'owncloud_docroot_httpd_context':
       context  => 'httpd_sys_rw_content_t',
-      pathname => "${owncloud::datadirectory}(/.*)?",
+      pathname => "${::owncloud::datadirectory}(/.*)?",
       notify   => Exec['owncloud_set_docroot_httpd_context'],
-      require  => File["${owncloud::datadirectory}"]
+      require  => File["${::owncloud::datadirectory}"]
     }
     exec{ 'owncloud_set_docroot_httpd_context':
-      command     => "/sbin/restorecon -Rv ${owncloud::datadirectory}",
+      command     => "/sbin/restorecon -Rv ${::owncloud::datadirectory}",
       refreshonly => true,
-      require     => File["${owncloud::datadirectory}"]
+      require     => File["${::owncloud::datadirectory}"]
     }
     selinux::fcontext{ 'owncloud_config_httpd_context':
       context  => 'httpd_sys_rw_content_t',
-      pathname => "${owncloud::params::documentroot}/config(/.*)?",
+      pathname => "${::owncloud::params::documentroot}/config(/.*)?",
       notify   => Exec['owncloud_set_config_httpd_context'],
-      require  => File["${owncloud::params::documentroot}"]
+      require  => File["${::owncloud::params::documentroot}"]
     }
     exec{ 'owncloud_set_config_httpd_context':
-      command     => "/sbin/restorecon -Rv ${owncloud::params::documentroot}/config",
+      command     => "/sbin/restorecon -Rv ${::owncloud::params::documentroot}/config",
       refreshonly => true,
-      require     => File["${owncloud::params::documentroot}"]
+      require     => File["${::owncloud::params::documentroot}"]
     }
     selinux::fcontext{ 'owncloud_apps_httpd_context':
       context  => 'httpd_sys_rw_content_t',
-      pathname => "${owncloud::params::documentroot}/apps(/.*)?",
+      pathname => "${::owncloud::params::documentroot}/apps(/.*)?",
       notify   => Exec['owncloud_set_apps_httpd_context'],
-      require  => File["${owncloud::params::documentroot}"]
+      require  => File["${::owncloud::params::documentroot}"]
     }
     exec{ 'owncloud_set_apps_httpd_context':
-      command     => "/sbin/restorecon -Rv ${owncloud::params::documentroot}/apps",
+      command     => "/sbin/restorecon -Rv ${::owncloud::params::documentroot}/apps",
       refreshonly => true,
-      require     => File["${owncloud::params::documentroot}"]
+      require     => File["${::owncloud::params::documentroot}"]
     }
     if $::b2drop::manage_tmp {
       selinux::fcontext{ 'custom_tmp_context':
