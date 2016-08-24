@@ -119,6 +119,6 @@ $CONFIG = array (
   \'memcache.local\' => \'\OC\Memcache\APCu\',
 );
 ',
-    require  => Class['::owncloud'],
+    require => Class['::owncloud'],
   }
 }
