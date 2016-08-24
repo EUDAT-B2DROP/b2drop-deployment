@@ -112,28 +112,14 @@ class b2drop::php (
     ];
   }
 
-#  class { '::memcached':
-#    listen_ip => $::ipaddress_lo
-#  }
-#  file { 'owncloud_memcache_config':
-#    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
-#    content => '<?php
-#$CONFIG = array (
-#  \'memcache.local\' => \'\OC\Memcache\APCu\',
-#  \'memcache.distributed\' =>\'\OC\Memcache\Memcached\',
-#  \'memcached_servers\' => array(
-#    array(\'localhost\', 11211),
-#    ),
-#);
-#',
-#  }
-
-#  file { 'owncloud_memcache_config':
-#    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
-#    content => '<?php
-#$CONFIG = array (
-#  \'memcache.local\' => \'\OC\Memcache\APCu\',
-#);
-#',
-#  }
+  file { 'owncloud_cache_config':
+    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
+    owner   => "${::owncloud::params::www_user}",
+    group   => "${::owncloud::params::www_group}",
+    content => '<?php
+$CONFIG = array (
+  \'memcache.local\' => \'\OC\Memcache\APCu\',
+);
+',
+  }
 }
