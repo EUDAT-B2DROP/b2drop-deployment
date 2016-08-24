@@ -114,12 +114,11 @@ class b2drop::php (
 
   file { 'owncloud_cache_config':
     path    => "${::owncloud::params::documentroot}/config/cache.config.php",
-    owner   => "${::owncloud::params::www_user}",
-    group   => "${::owncloud::params::www_group}",
     content => '<?php
 $CONFIG = array (
   \'memcache.local\' => \'\OC\Memcache\APCu\',
 );
 ',
+    require  => Class['::owncloud'],
   }
 }
