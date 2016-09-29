@@ -54,7 +54,7 @@ class b2drop::repos {
     ensure   => $theme_ensure,
     revision => $::b2drop::branch_theme,
     provider => git,
-    source   => "https://github.com/${::b2drop::gitrepo_user_theme}/b2drop-core.git",
+    source   => "https://github.com/${::b2drop::gitrepo_user_theme}/b2drop-theme.git",
     user     => "${::owncloud::params::www_user}",
     group    => "${::owncloud::params::www_group}",
     require  => [ Class['::owncloud'], Package['git'], File["${::owncloud::params::documentroot}/themes"] ],
