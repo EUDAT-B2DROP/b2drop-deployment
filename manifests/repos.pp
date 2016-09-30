@@ -63,7 +63,7 @@ class b2drop::repos {
   # disable stay logged in button
   vcsrepo { "${::owncloud::params::documentroot}/apps/disablestayloggedin":
     ensure   => $plugin_ensure,
-    revision => $::b2drop::branch_plugin,
+    revision => 'master',
     provider => git,
     source   => "https://github.com/${::b2drop::gitrepo_user_plugin}/b2drop_disable_stayloggedin.git",
     user     => "${::owncloud::params::www_user}",
