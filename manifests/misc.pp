@@ -13,7 +13,13 @@
 #
 # Copyright 2015 EUDAT2020
 #
-class b2drop::misc {
+# [*cron_run_interval*]
+#   how often to run the cron
+#   default: every 10 minutes
+#
+class b2drop::misc (
+  $cron_run_interval = 10
+){
   #
   # owncloud cron
   #
@@ -21,7 +27,7 @@ class b2drop::misc {
     cron { 'owncloud':
       command => "php -f ${::owncloud::params::documentroot}/cron.php",
       user    => $::owncloud::params::www_user,
-      minute  => '*/10'
+      minute  => "*/${cron_run_interval}"
     }
   }
   #
