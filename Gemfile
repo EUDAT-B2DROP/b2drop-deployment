@@ -21,7 +21,7 @@ group :test do
   gem "puppet-syntax"
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
-  gem "rspec", "< 3.2.0" # Support for 1.8.7
+  gem "rspec"
   gem "rspec-retry"
   gem "serverspec"
   gem "simplecov", ">= 0.11.0"
