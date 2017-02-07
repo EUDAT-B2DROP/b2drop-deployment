@@ -57,7 +57,7 @@ class b2drop::nextcloud (
     owner  => $::apache::params::user,
     group  => $::apache::params::group,
   } ->
-  file {"${::fsd_eudat::nextcloud::init::documentroot}/apps":
+  file {"${::b2drop::documentroot}/apps":
     ensure => 'directory',
     owner  => $::apache::params::user,
     group  => $::apache::params::group,
