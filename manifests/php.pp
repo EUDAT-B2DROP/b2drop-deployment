@@ -91,7 +91,6 @@ class b2drop::php (
     }
   }
 
-
   package {$phpmodules:
     ensure => 'installed',
   } ->
@@ -111,14 +110,4 @@ class b2drop::php (
       'set apc.enable_cli 1',
     ];
   }
-
-#  file { 'owncloud_cache_config':
-#    path    => "${::owncloud::params::documentroot}/config/cache.config.php",
-#    content => '<?php
-#$CONFIG = array (
-#  \'memcache.local\' => \'\OC\Memcache\APCu\',
-#);
-#',
-#    require => Class['::owncloud'],
-#  }
 }

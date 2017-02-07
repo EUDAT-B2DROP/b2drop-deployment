@@ -36,14 +36,20 @@
 # [*gitrepo_user_plugin*]
 #   the github user to which the repository for the plugin belongs
 #
-# [*manage_owncloud_repo*]
-#   whether to manage owncloud repository
+# [*documentroot*]
+#   where is nextcloud installed to, defaults to /var/www/nextcloud
 #
-# [*manage_owncloud_cron*]
-#   whether to manage owncloud cron or use aj
+# [*datadirectory*]
+#   where are the data, defaults to $documentroot/data
+#
+# [*manage_cron*]
+#   whether to manage nextcloud cron or use aj
 #
 # [*manage_php*]
 #   whether to manage php installation and configurtion
+#
+# [*manage_selinux*]
+#   whether to manage some selinux rules
 #
 # [*manage_tmp*]
 #   whether to manage a custom php directory for file uploads
@@ -67,28 +73,29 @@ class b2drop (
   $autoupdate_plugin    = false,
   $branch_plugin        = 'master',
   $gitrepo_user_plugin  = 'EUDAT-B2DROP',
-  $manage_owncloud_repo = true,
-  $manage_owncloud_cron = true,
+  $documentroot         = '/var/www/nextcloud',
+  $datadirectory        = "${documentroot}/data",
+  $manage_cron          = true,
   $manage_php           = true,
+  $manage_selinux       = true,
   $manage_tmp           = false,
   $reset_password_link  = 'https://b2drop.eudat.eu/pwm/public/ForgottenPassword'
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
-  validate_bool($manage_owncloud_repo)
-  validate_bool($manage_owncloud_cron)
+  validate_bool($manage_cron)
   validate_bool($manage_php)
+  validate_bool($manage_selinux)
 
   if $manage_php {
     include ::b2drop::php
-    $owncloud_module_manage_php = !$manage_php
+  }
+  if $manage_selinux {
+    include ::b2drop::selinux
   }
 
-  class { '::owncloud':
-    manage_phpmysql => $owncloud_module_manage_php
-  }
+  include ::b2drop::apache
   include ::b2drop::misc
-  include ::b2drop::repos
-
-
+  include ::b2drop::mysql
+  include ::b2drop::nextcloud
 }

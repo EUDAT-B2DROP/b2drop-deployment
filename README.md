@@ -46,12 +46,7 @@ To deploy B2DROP on a host, just add
 ```
 include ::b2drop
 ```
-to the node and to hiera:
-```
-mysql::server::remove_default_accounts: true
-owncloud::db_pass: 'somesecretpass'
-owncloud::datadirectory: '/owncloud/data'
-```
+to the node and add missing variables
 
 ## Limitations
 
