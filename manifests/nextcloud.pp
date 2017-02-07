@@ -1,6 +1,6 @@
 # == Class: b2drop::nextcloud
 #
-# manage the git repositories inside of the owncloud theme and app folder
+# manage the git repositories inside of the nextcloud theme and app folder
 #
 # === Parameters
 #
@@ -23,7 +23,7 @@ class b2drop::nextcloud (
 
   # cron
   if $::b2drop::manage_cron {
-    cron { 'owncloud':
+    cron { 'nextcloud':
       command => "php -f ${::b2drop::documentroot}/cron.php",
       user    => $::apache::params::user,
       minute  => "*/${cron_run_interval}"

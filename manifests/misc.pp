@@ -23,7 +23,7 @@ class b2drop::misc (
 
 
 
-  # manage tmp next to the owncloud dir for easier file uploads
+  # manage tmp next to the nextcloud dir for easier file uploads
   if ($::b2drop::manage_tmp) {
     validate_string($::b2drop::manage_tmp)
     file { $::b2drop::manage_tmp:

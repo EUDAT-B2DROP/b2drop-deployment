@@ -6,10 +6,6 @@
 # ldap deployment and other more complex settings are deployment specific,
 # therefore not managed within this module.
 #
-# owncloud:
-# This module uses shoekstra-owncloud to setup owncloud, apache and mysql.
-# Currently we manage the owncloud repo by our own, because shoekstra is
-# referring to a outdated repo. We will use his module
 #
 # php:
 # A php7 repo is managed using b2drop::php.
