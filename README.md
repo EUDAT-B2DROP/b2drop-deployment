@@ -16,8 +16,7 @@
 
 ## Module Description
 
-This module interfaces with the owncloud module by shoekstra (shoekstra-owncloud) and
-adds the repositories for b2drop to the apps and themes folder.
+This module adds the repositories for b2drop to the apps and themes folder. It also configures webserver and database.
 
 ## Setup
 
@@ -30,27 +29,28 @@ git clone https://github.com/EUDAT-B2DROP/b2drop-puppet.git b2drop
 
 ### What puppet-b2drop affects
 
-* mysql, owncloud, php7, cron, tmp
+* apache, mysql, php7, cron, tmp, logrotate
 
 ### Beginning with b2drop
 
-The following snippet will enable a all in one machine (LAMP stack + owncloud) on one server.
+The following snippet will enable a all in one machine (LAMP stack + nextcloud + b2drop) on one server.
 ```puppet
     class { 'b2drop': }
 ```
 ## Usage
 
-The `b2drop` class configures mysql, owncloud and the repositories for the b2drop extensions.
+The `b2drop` class configures apache, mysql and the repositories for the b2drop extensions.
 
 To deploy B2DROP on a host, just add 
 ```
 include ::b2drop
 ```
-to the node and add missing variables
+to the node and add missing variables for b2drop::apache and b2drop::mysql using hiera.
 
 ## Limitations
 
-We are focussing on CentOS, other operating systems should work as well.
+We are focussing on CentOS, other operating systems should work as well due to apache/mysql/vcsrepo.
+You may disable selinux then.
 
 ## Development
 
