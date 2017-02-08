@@ -1,9 +1,13 @@
 fixtures:
   repositories:
     apache: "https://github.com/puppetlabs/puppetlabs-apache.git"
+    logrotate: "https://github.com/yo61/puppet-logrotate.git"
     mysql: "https://github.com/puppetlabs/puppetlabs-mysql.git"
-    selinux: "https://github.com/jfryman/puppet-selinux.git"
+    selinux:
+      repo: "https://github.com/voxpupuli/puppet-selinux"
+      ref: "v0.4.0"
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
     vcsrepo: "https://github.com/puppetlabs/puppetlabs-vcsrepo.git"
+    concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
   symlinks:
     b2drop: "#{source_dir}"

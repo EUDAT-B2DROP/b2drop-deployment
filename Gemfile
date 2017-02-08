@@ -21,7 +21,6 @@ group :test do
   gem 'puppet-lint-variable_contains_upcase', :require => 'false'
   gem 'puppet-lint-numericvariable',          :require => 'false'
   gem 'json',                                 :require => 'false'
-  gem "versionomy",                           :require => false
   gem 'webmock',                              :require => 'false'
 end
 
