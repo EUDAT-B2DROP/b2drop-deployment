@@ -1,6 +1,6 @@
 # == Class: b2drop::misc
 #
-# do some common configuration, php hardening, selinux configuration, etc.
+# manage tmp directory if wished
 #
 # === Parameters
 #
@@ -13,17 +13,10 @@
 #
 # Copyright 2015 EUDAT2020
 #
-# [*cron_run_interval*]
-#   how often to run the cron
-#   default: every 10 minutes
-#
 class b2drop::misc (
-  $cron_run_interval = 10
 ){
 
-
-
-  # manage tmp next to the nextcloud dir for easier file uploads
+  # manage tmp next to the data dir for easier file uploads (due to file mv)
   if ($::b2drop::manage_tmp) {
     validate_string($::b2drop::manage_tmp)
     file { $::b2drop::manage_tmp:
@@ -40,12 +33,5 @@ class b2drop::misc (
         'set max_input_time 360',
       ];
     }
-  }
-
-  #
-  # mysql
-  #
-  if ! defined(Class['mysql::server']) {
-    include ::mysql::server
   }
 }
