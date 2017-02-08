@@ -94,4 +94,5 @@ class b2drop (
   include ::b2drop::misc
   include ::b2drop::mysql
   include ::b2drop::nextcloud
+  include ::b2drop::b2drop
 }

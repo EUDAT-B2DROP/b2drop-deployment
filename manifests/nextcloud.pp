@@ -1,6 +1,6 @@
 # == Class: b2drop::nextcloud
 #
-# manage the git repositories inside of the nextcloud theme and app folder
+# manage cron, data dir and logrotating
 #
 # === Parameters
 #
@@ -21,7 +21,7 @@ class b2drop::nextcloud (
   $cron_run_interval = 10
 ) {
 
-  # cron
+  # CRON
   if $::b2drop::manage_cron {
     cron { 'nextcloud':
       command => "php -f ${::b2drop::documentroot}/cron.php",
@@ -30,23 +30,7 @@ class b2drop::nextcloud (
     }
   }
 
-  # select nextcloud theme
-  file { 'b2drop_theme_config':
-    path    => "${::b2drop::documentroot}/config/b2drop.config.php",
-    content => "<?php
-\$CONFIG = array (
-  \'theme\' => \'b2drop\',
-  \'lost_password_link\' => \'${::b2drop::reset_password_link}\'
-);
-",
-    require => Vcsrepo["${::b2drop::documentroot}/themes/b2drop"]
-  }
-
-  package {'git':
-    ensure   => 'installed'
-  }
-
-  # create some directories we refer to
+  # APPS
   exec{ 'b2drop_create_docroot':
     path    => '/usr/bin:/usr/sbin:/bin',
     command => "mkdir -p ${::b2drop::documentroot}",
@@ -62,6 +46,8 @@ class b2drop::nextcloud (
     owner  => $::apache::params::user,
     group  => $::apache::params::group,
   }
+
+  # DATA
   exec{ 'b2drop_create_datadirectory':
     path    => '/usr/bin:/usr/sbin:/bin',
     command => "mkdir -p ${::b2drop::datadirectory}",
@@ -73,48 +59,7 @@ class b2drop::nextcloud (
     group  => $::apache::params::group,
   }
 
-  # B2SHAREBRIDGE
-  if $::b2drop::autoupdate_plugin {
-    $plugin_ensure = 'latest'
-  }
-  else {
-    $plugin_ensure = 'present'
-  }
-
-  vcsrepo { "${::b2drop::documentroot}/apps/b2sharebridge":
-    ensure   => $plugin_ensure,
-    revision => $::b2drop::branch_plugin,
-    provider => git,
-    source   => "https://github.com/${::b2drop::gitrepo_user_plugin}/b2sharebridge.git",
-    user     => $::apache::params::user,
-    group    => $::apache::params::group,
-    require  => Package['git'],
-  }
-
-  # THEME
-  if $::b2drop::autoupdate_theme {
-    $theme_ensure = 'latest'
-  }
-  else {
-    $theme_ensure = 'present'
-  }
-  file {"${::b2drop::documentroot}/themes":
-    ensure => 'directory',
-    owner  => $::apache::params::user,
-    group  => $::apache::params::group,
-  }
-
-  vcsrepo { "${::b2drop::documentroot}/themes/b2drop":
-    ensure   => $theme_ensure,
-    revision => $::b2drop::branch_theme,
-    provider => git,
-    source   => "https://github.com/${::b2drop::gitrepo_user_theme}/b2drop-theme.git",
-    user     => $::apache::params::user,
-    group    => $::apache::params::group,
-    require  => [ Package['git'], File["${::b2drop::documentroot}/themes"] ],
-  }
-
-  # logrotating
+  # LOGROTATING
   logrotate::rule { 'nextcloud':
     rotate_every  => 'day',
     path          => "${::b2drop::datadirectory}/nextcloud.log",
