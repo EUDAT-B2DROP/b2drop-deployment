@@ -14,44 +14,62 @@
 #
 # Document parameters here.
 #
+# [*apache_ssl_chain*]
+#   Required: ssl chain to use
+#
+# [*apache_ssl_key*]
+#   Required: ssl key to use
+#
+# [*apache_ssl_cert*]
+#   Required: ssl cert to use
+#
+# [*mysql_password*]
+#   required: password to use for mysql database
+#
+# [*apache_bind_interface*]
+#   Optional: which ip interface to use, defaults to em1. e.g. eth0!
+#
+# [*apache_servername*]
+#   Optional: which servername to use, defaults to b2drop.eudat.eu
+#
 # [*autoupdate_theme*]
-#   whether to autoupdate the theme via git repo
+#   Optional: whether to autoupdate the theme via git repo
 #
 # [*branch_theme*]
-#   branch to use for the theme, e.g. owncloud7, owncloud8...
+#   Optional: branch to use for the theme, e.g. owncloud7, owncloud8...
 #
 # [*gitrepo_user_theme*]
-#   the github user to which the repository for the theme belongs
+#   Optional: the github user to which the repository for the theme belongs
 #
 # [*autoupdate_plugin*]
-#   whether to autoupdate the plugin via git repo
+#   Optional: whether to autoupdate the plugin via git repo
 #
 # [*branch_plugin*]
-#   branch to use for the plugin
+#   Optional: branch to use for the plugin
 #
 # [*gitrepo_user_plugin*]
-#   the github user to which the repository for the plugin belongs
+#   Optional: the github user to which the repository for the plugin belongs
 #
 # [*documentroot*]
-#   where is nextcloud installed to, defaults to /var/www/nextcloud
+#   Optional: where is nextcloud installed to, defaults to /var/www/nextcloud
 #
 # [*datadirectory*]
-#   where are the data, defaults to $documentroot/data
+#   Optional: where are the data, defaults to $documentroot/data
 #
 # [*manage_cron*]
-#   whether to manage nextcloud cron or use aj
+#   Optional: whether to manage nextcloud cron or use aj
 #
 # [*manage_php*]
-#   whether to manage php installation and configurtion
+#   Optional: whether to manage php installation and configurtion
 #
 # [*manage_selinux*]
-#   whether to manage some selinux rules
+#   Optional: whether to manage some selinux rules
 #
 # [*manage_tmp*]
-#   whether to manage a custom php directory for file uploads
+#   Optional: whether to manage a custom php directory for file uploads
 #
 # [*reset_password_link*]
-#   link that prompted when user types in wrong password
+#   Optional: link that prompted when user types in wrong password
 #
 # === Authors
 #
@@ -63,19 +81,25 @@
 # Copyright 2015 EUDAT2020
 #
 class b2drop (
-  $autoupdate_theme     = false,
-  $branch_theme         = 'master',
-  $gitrepo_user_theme   = 'EUDAT-B2DROP',
-  $autoupdate_plugin    = false,
-  $branch_plugin        = 'master',
-  $gitrepo_user_plugin  = 'EUDAT-B2DROP',
-  $documentroot         = '/var/www/nextcloud',
-  $datadirectory        = "${documentroot}/data",
-  $manage_cron          = true,
-  $manage_php           = true,
-  $manage_selinux       = true,
-  $manage_tmp           = false,
-  $reset_password_link  = 'https://b2drop.eudat.eu/pwm/public/ForgottenPassword'
+  $apache_ssl_chain,
+  $apache_ssl_key,
+  $apache_ssl_cert,
+  $mysql_password,
+  $apache_bind_interface = 'em1',
+  $apache_servername     = 'b2drop.eudat.eu',
+  $autoupdate_theme      = false,
+  $branch_theme          = 'master',
+  $gitrepo_user_theme    = 'EUDAT-B2DROP',
+  $autoupdate_plugin     = false,
+  $branch_plugin         = 'master',
+  $gitrepo_user_plugin   = 'EUDAT-B2DROP',
+  $documentroot          = '/var/www/nextcloud',
+  $datadirectory         = "${documentroot}/data",
+  $manage_cron           = true,
+  $manage_php            = true,
+  $manage_selinux        = true,
+  $manage_tmp            = false,
+  $reset_password_link   = 'https://b2drop.eudat.eu/pwm/public/ForgottenPassword'
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
@@ -90,9 +114,18 @@ class b2drop (
     include ::b2drop::selinux
   }
 
-  include ::b2drop::apache
+  class { ::b2drop::apache:
+    ssl_cert       => $apache_ssl_cert,
+    ssl_chain      => $apache_ssl_chain,
+    ssl_key        => $apache_ssl_key,
+    bind_interface => $apache_bind_interface,
+    servername     => $apache_servername
+  }
+  class { ::b2drop::mysql:
+    password  => $mysql_password,
+  }
+
   include ::b2drop::misc
-  include ::b2drop::mysql
   include ::b2drop::nextcloud
   include ::b2drop::b2drop
 }
