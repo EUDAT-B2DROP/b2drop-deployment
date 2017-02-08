@@ -16,8 +16,8 @@ describe 'b2drop' do
         when 'RedHat'
           apache_user = 'apache'
           apache_group = 'apache'
-          datadirectory = '/var/www/html/owncloud/data'
-          documentroot = '/var/www/html/owncloud'
+          datadirectory = '/var/www/nextcloud/data'
+          documentroot = '/var/www/nextcloud'
         end
 
         context 'b2drop class without any parameters' do
@@ -25,12 +25,14 @@ describe 'b2drop' do
           it 'should compile with all deps and cover all sub classes' do
             is_expected.to compile.with_all_deps
 
+            is_expected.to contain_class('b2drop::apache')
             is_expected.to contain_class('b2drop::misc')
-            is_expected.to contain_class('b2drop::repos')
+            is_expected.to contain_class('b2drop::mysql')
+            is_expected.to contain_class('b2drop::nextcloud')
             is_expected.to contain_class('b2drop::php')
-            is_expected.to contain_class('b2drop')
+            is_expected.to contain_class('b2drop::b2drop')
+            is_expected.to contain_class('b2drop::selinux')
 
-            is_expected.to contain_package('owncloud').with_ensure('present')
           end
 
           # b2drop::repos
