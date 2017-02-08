@@ -62,6 +62,7 @@ For testing the code with puppet utils, make sure you have ruby and bundler inst
 
 ```
 mkdir vendor
+export PUPPET_GEM_VERSION="~> 4.8.0"
 export GEM_HOME=vendor
 bundle install
 bundle exec rake test

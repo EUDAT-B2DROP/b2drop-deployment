@@ -1,32 +1,28 @@
 source ENV["GEM_SOURCE"] || "https://rubygems.org"
 
 group :test do
-  gem "rake"
   if puppet_gem_version = ENV["PUPPET_GEM_VERSION"]
     gem "puppet", ENV["PUPPET_GEM_VERSION"]
   else
     gem "puppet"
   end
-  gem "puppet-lint"
-  gem "puppet-lint-param-docs"
-  gem "puppet-lint-absolute_classname-check"
-  gem "puppet-lint-absolute_template_path"
-  gem "puppet-lint-trailing_newline-check"
-  gem "puppet-lint-unquoted_string-check"
-  gem "puppet-lint-leading_zero-check"
-  gem "puppet-lint-variable_contains_upcase"
-  gem "puppet-lint-numericvariable"
-  gem "rspec-puppet"
-  gem "rspec-puppet-facts"
-  gem "puppet-syntax"
-  gem "puppetlabs_spec_helper"
-  gem "metadata-json-lint"
-  gem "rspec"
-  gem "rspec-retry"
-  gem "serverspec"
-  gem "simplecov", ">= 0.11.0"
-  gem "simplecov-console"
-  gem "versionomy",                   :require => false
+  gem 'puppetlabs_spec_helper',               :require => 'false'
+  gem 'rspec-puppet',                         :require => 'false'
+  gem 'rspec-puppet-facts',                   :require => 'false'
+  gem 'metadata-json-lint',                   :require => 'false'
+  gem 'yaml-lint',                            :require => 'false'
+  gem 'puppet-syntax', git: 'https://github.com/gds-operations/puppet-syntax.git'
+  gem 'puppet-lint-param-docs',               :require => 'false'
+  gem 'puppet-lint-absolute_classname-check', :require => 'false'
+  gem 'puppet-lint-absolute_template_path',   :require => 'false'
+  gem 'puppet-lint-trailing_newline-check',   :require => 'false'
+  gem 'puppet-lint-unquoted_string-check',    :require => 'false'
+  gem 'puppet-lint-leading_zero-check',       :require => 'false'
+  gem 'puppet-lint-variable_contains_upcase', :require => 'false'
+  gem 'puppet-lint-numericvariable',          :require => 'false'
+  gem 'json',                                 :require => 'false'
+  gem "versionomy",                           :require => false
+  gem 'webmock',                              :require => 'false'
 end
 
 group :development do
