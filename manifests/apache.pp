@@ -39,7 +39,7 @@ class b2drop::apache (
   if $bind_interface in split($::interfaces, ',') {
     $bind_ip = inline_template("<%= @ipaddress_${bind_interface} %>")
   } else {
-    error("The interface ${bind_interface} is not available, erroring!")
+    fail("The interface ${bind_interface} is not available, erroring!")
   }
 
   class { '::apache':

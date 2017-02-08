@@ -23,8 +23,17 @@
 # [*apache_ssl_cert*]
 #   Required: ssl cert to use
 #
-# [*mysql_password*]
-#   required: password to use for mysql database
+# [*mysql_nextcloud_password*]
+#   Required: password to use for mysql database
+#
+# [*mysql_root_password*]
+#   Required: password for root user
+#
+# [*mysql_monitoring_password*]
+#   Required: password for monitorin user
+#
+# [*mysql_backup_password*]
+#   Required: password for dump user
 #
 # [*apache_bind_interface*]
 #   Optional: which ip interface to use, defaults to em1. e.g. eth0!
@@ -68,6 +77,15 @@
 # [*manage_tmp*]
 #   Optional: whether to manage a custom php directory for file uploads
 #
+# [*mysql_backup_directory*]
+#   Optional: where to place dumps, default '/usr/local/mysqldumps'
+#
+# [*mysql_backup_compress*]
+#   Optional: whether to compress dumps, default false
+#
+# [*mysql_monitoring_host*]
+#   Optional: which host to allow monitoring, default localhost
+#
 # [*reset_password_link*]
 #   Optional: link that prompted when user types in wrong password
 #
@@ -84,22 +102,28 @@ class b2drop (
   $apache_ssl_chain,
   $apache_ssl_key,
   $apache_ssl_cert,
-  $mysql_password,
-  $apache_bind_interface = 'em1',
-  $apache_servername     = 'b2drop.eudat.eu',
-  $autoupdate_theme      = false,
-  $branch_theme          = 'master',
-  $gitrepo_user_theme    = 'EUDAT-B2DROP',
-  $autoupdate_plugin     = false,
-  $branch_plugin         = 'master',
-  $gitrepo_user_plugin   = 'EUDAT-B2DROP',
-  $documentroot          = '/var/www/nextcloud',
-  $datadirectory         = "${documentroot}/data",
-  $manage_cron           = true,
-  $manage_php            = true,
-  $manage_selinux        = true,
-  $manage_tmp            = false,
-  $reset_password_link   = 'https://b2drop.eudat.eu/pwm/public/ForgottenPassword'
+  $mysql_nextcloud_password,
+  $mysql_root_password,
+  $mysql_monitoring_password,
+  $mysql_backup_password,
+  $apache_bind_interface  = 'em1',
+  $apache_servername      = 'b2drop.eudat.eu',
+  $autoupdate_theme       = false,
+  $branch_theme           = 'master',
+  $gitrepo_user_theme     = 'EUDAT-B2DROP',
+  $autoupdate_plugin      = false,
+  $branch_plugin          = 'master',
+  $gitrepo_user_plugin    = 'EUDAT-B2DROP',
+  $documentroot           = '/var/www/nextcloud',
+  $datadirectory          = "${documentroot}/data",
+  $manage_cron            = true,
+  $manage_php             = true,
+  $manage_selinux         = true,
+  $manage_tmp             = false,
+  $mysql_backup_directory = '/usr/local/mysqldumps',
+  $mysql_backup_compress  = false,
+  $mysql_monitoring_host  = 'localhost',
+  $reset_password_link    = 'https://b2drop.eudat.eu/pwm/public/ForgottenPassword'
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
@@ -122,7 +146,13 @@ class b2drop (
     servername     => $apache_servername
   }
   class { '::b2drop::mysql':
-    password  => $mysql_password,
+    nextcloud_password  => $mysql_nextcloud_password,
+    root_password       => $mysql_root_password,
+    monitoring_password => $mysql_monitoring_password,
+    backup_password     => $mysql_backup_password,
+    backup_directory    => $mysql_backup_directory,
+    backup_compress     => $mysql_backup_compress,
+    monitoring_host     => $mysql_monitoring_host
   }
 
   include ::b2drop::misc
