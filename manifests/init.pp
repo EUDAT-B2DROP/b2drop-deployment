@@ -114,14 +114,14 @@ class b2drop (
     include ::b2drop::selinux
   }
 
-  class { ::b2drop::apache:
+  class { '::b2drop::apache':
     ssl_cert       => $apache_ssl_cert,
     ssl_chain      => $apache_ssl_chain,
     ssl_key        => $apache_ssl_key,
     bind_interface => $apache_bind_interface,
     servername     => $apache_servername
   }
-  class { ::b2drop::mysql:
+  class { '::b2drop::mysql':
     password  => $mysql_password,
   }
 
