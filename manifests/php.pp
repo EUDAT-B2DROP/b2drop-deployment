@@ -78,13 +78,18 @@ class b2drop::php (
           --replace-with=php70w-common',
           require     => Package['yum-plugin-replace'],
         }
+
+        package { 'php70w-mcrypt':
+          ensure  => 'installed',
+          require => Exec['import-webtatic-gpgkey'],
+        }
       }
       else {
-        $phpmodules = [ 'php-pecl-apcu', 'php-mysql' ]
+        $phpmodules = [ 'php-pecl-apcu', 'php-mysql', 'php-mcrypt' ]
       }
     }
     'Debian': {
-      $phpmodules = [ 'php5-apcu', 'php5-mysql' ]
+      $phpmodules = [ 'php5-apcu', 'php5-mysql', 'php-mcrypt' ]
     }
     default: {
       fail('Operating system not supported with this module')
