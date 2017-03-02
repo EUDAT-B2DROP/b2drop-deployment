@@ -19,11 +19,6 @@ group :test do
   gem 'puppet-lint-leading_zero-check',       :require => 'false'
   gem 'json',                                 :require => 'false'
   gem 'webmock',                              :require => 'false'
-  gem 'json',                                 :require => 'false'
-  gem 'webmock',                              :require => 'false'
-  gem 'beaker-rspec',                         :require => 'false'
-  gem 'beaker-puppet_install_helper',         :require => 'false'
-  gem 'puppet',                               :require => 'false'
   gem 'facter',                               :require => 'false'
 end
 
