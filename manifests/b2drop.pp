@@ -48,6 +48,7 @@ class b2drop::b2drop (
     require     => Vcsrepo["${::b2drop::documentroot}/apps/b2sharebridge"],
     logoutput   => true,
     before      => Exec['b2drop_turn_off_maintenance'],
+    notify      => Exec['b2drop_turn_off_maintenance']
   }
   exec { 'b2drop_turn_off_maintenance':
     refreshonly => true,
