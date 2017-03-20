@@ -36,6 +36,37 @@ class b2drop::b2drop (
     user     => $::apache::params::user,
     group    => $::apache::params::group,
     require  => Package['git'],
+    notify   => Exec['b2drop_turn_on_maintenance']
+  }
+  # Continuously deploy b2sharebridge
+  exec { 'b2drop_turn_on_maintenance':
+    refreshonly => true,
+    cwd         => $::b2drop::documentroot,
+    user        => $::apache::params::user,
+    group       => $::apache::params::group,
+    command     => "/usr/bin/php ${::b2drop::documentroot}/occ maintenance:mode --on",
+    require     => Vcsrepo["${::b2drop::documentroot}/apps/b2sharebridge"],
+    logoutput   => true,
+    before      => Exec['b2drop_b2sharebridge_upgrade'],
+  }
+  exec { 'b2drop_b2sharebridge_upgrade':
+    refreshonly => true,
+    cwd         => $::b2drop::documentroot,
+    user        => $::apache::params::user,
+    group       => $::apache::params::group,
+    command     => "/usr/bin/php ${::b2drop::documentroot}/occ upgrade",
+    require     => Exec['b2drop_turn_on_maintenance'],
+    logoutput   => true,
+    before      => Exec['b2drop_turn_off_maintenance'],
+  }
+  exec { 'b2drop_turn_off_maintenance':
+    refreshonly => true,
+    cwd         => $::b2drop::documentroot,
+    user        => $::apache::params::user,
+    group       => $::apache::params::group,
+    command     => "/usr/bin/php ${::b2drop::documentroot}/occ maintenance:mode --off",
+    require     => Exec['b2drop_b2sharebridge_upgrade'],
+    logoutput   => true,
   }
 
   # THEME
