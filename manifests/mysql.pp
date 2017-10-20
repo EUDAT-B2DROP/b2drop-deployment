@@ -43,9 +43,16 @@ class b2drop::mysql (
   $backup_compress = false,
   $monitoring_host = 'localhost'
 ){
+  $override_options = {
+    'mysqld' => {
+      'performance_schema' => 'on',
+    }
+  }
+
   class { '::mysql::server':
     remove_default_accounts => true,
-    root_password           => $root_password
+    root_password           => $root_password,
+    override_options        => $override_options
   }
   class { '::mysql::server::monitor':
     mysql_monitor_username => 'monitoring',
