@@ -83,6 +83,11 @@ class b2drop::php (
           ensure  => 'installed',
           require => Exec['import-webtatic-gpgkey'],
         }
+
+        package { 'php70w-opcache':
+          ensure  => 'installed',
+          require => Exec['import-webtatic-gpgkey'],
+        }
       }
       else {
         $phpmodules = [ 'php-pecl-apcu', 'php-mysql', 'php-mcrypt' ]
