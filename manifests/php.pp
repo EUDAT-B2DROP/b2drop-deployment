@@ -121,7 +121,7 @@ class b2drop::php (
     ];
   } ->
   augeas { 'opcache.ini':
-    context => '/files/etc/php.d/opcache.ini',
+    context => '/files/etc/php.d/opcache.ini/.anon',
     changes => [
       'set opcache.enable 1',
       'set opcache.enable_cli 1',
