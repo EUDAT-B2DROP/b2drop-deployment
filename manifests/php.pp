@@ -119,5 +119,17 @@ class b2drop::php (
     changes => [
       'set apc.enable_cli 1',
     ];
+  } ->
+  augeas { 'opcache.ini':
+    context => '/files/etc/php.d/opcache.ini',
+    changes => [
+      'set opcache.enable 1',
+      'set opcache.enable_cli 1',
+      'set opcache.interned_strings_buffer 8',
+      'set opcache.max_accelerated_files 10000',
+      'set opcache.memory_consumption 128',
+      'set opcache.save_comments 1',
+      'set opcache.revalidate_freq 1',
+    ];
   }
 }
