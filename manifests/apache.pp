@@ -43,8 +43,8 @@ class b2drop::apache (
   }
 
   class { '::apache':
-    default_mods        => [ 'env', 'dav', 'dir', 'headers', 'rewrite', 'proxy',
-      'proxy_ajp'],
+    default_mods        => [ 'env', 'dav', 'deflate', 'dir', 'headers', 'rewrite',
+      'proxy', 'proxy_ajp'],
     default_confd_files => false,
     default_vhost       => false,
     mpm_module          => 'prefork',
