@@ -19,7 +19,7 @@ class b2drop::php (
   case $::osfamily {
     'RedHat': {
       if $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == '7'{
-        $phpmodules = [ 'php70w-pecl-apcu', 'php70w-mysql' ]
+        $phpmodules = [ 'php70w', 'php70w-gd', 'php70w-mbstring', 'php70w-intl', 'php70w-pecl-apcu', 'php70w-mysql' ]
         $gpg_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7'
         yumrepo { 'webtatic':
           mirrorlist     => 'https://mirror.webtatic.com/yum/el7/$basearch/mirrorlist',
