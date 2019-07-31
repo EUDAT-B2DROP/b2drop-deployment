@@ -66,7 +66,6 @@ class b2drop::b2drop (
     content => "<?php
 \$CONFIG = array (
   \'theme\' => \'b2drop\',
-  \'lost_password_link\' => \'${::b2drop::reset_password_link}\'
 );
 ",
     require => Vcsrepo["${::b2drop::documentroot}/themes/b2drop"]

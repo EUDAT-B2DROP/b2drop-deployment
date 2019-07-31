@@ -91,12 +91,6 @@ class b2drop::apache (
 includeSubDomains; preload\"",
       'always append X-Frame-Options SAMEORIGIN'
     ],
-    proxy_pass    => [
-      {
-        'path' => '/pwm',
-        'url'  => 'ajp://localhost:8009/pwm'
-      }
-    ]
   }
 
   # some php stuff

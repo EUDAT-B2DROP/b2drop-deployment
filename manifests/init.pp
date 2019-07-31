@@ -86,9 +86,6 @@
 # [*mysql_monitoring_host*]
 #   Optional: which host to allow monitoring, default localhost
 #
-# [*reset_password_link*]
-#   Optional: link that prompted when user types in wrong password
-#
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
@@ -123,7 +120,6 @@ class b2drop (
   $mysql_backup_directory = '/usr/local/mysqldumps',
   $mysql_backup_compress  = false,
   $mysql_monitoring_host  = 'localhost',
-  $reset_password_link    = 'https://b2drop.eudat.eu/pwm/public/ForgottenPassword'
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
