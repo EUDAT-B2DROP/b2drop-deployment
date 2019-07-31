@@ -89,7 +89,8 @@ class b2drop::apache (
     headers       => [
       "always set Strict-Transport-Security \"max-age=15768000; \
 includeSubDomains; preload\"",
-      'always append X-Frame-Options SAMEORIGIN'
+      'unset X-Frame-Options',
+      'set X-Frame-Options SAMEORIGIN'
     ],
   }
 
