@@ -12,7 +12,7 @@ group :test do
   gem 'metadata-json-lint',                   :require => 'false'
   gem 'yaml-lint',                            :require => 'false'
   gem 'puppet-syntax',                        '~> 2.3.0'
-  gem 'puppet-lint',                          '~> 2.1'
+  gem 'puppet-lint',                          '~> 2.2.0'
   gem 'puppet-lint-param-docs',               :require => 'false'
   gem 'puppet-lint-absolute_classname-check', :require => 'false'
   gem 'puppet-lint-unquoted_string-check',    :require => 'false'
