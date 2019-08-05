@@ -19,7 +19,7 @@ class b2drop::php (
   case $::osfamily {
     'RedHat': {
       if $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == '7'{
-        $phpmodules = [ 'php70w', 'php70w-gd', 'php70w-mbstring', 'php70w-intl', 'php70w-pecl-apcu', 'php70w-mysql', 'php70w-opcache',  'php70w-mcrypt']
+        $phpmodules = [ 'php72w', 'php72w-gd', 'php72w-mbstring', 'php72w-intl', 'php72w-pecl-apcu', 'php72w-mysql', 'php72w-opcache' ]
         $gpg_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7'
         yumrepo { 'webtatic':
           mirrorlist     => 'https://mirror.webtatic.com/yum/el7/$basearch/mirrorlist',
@@ -68,14 +68,14 @@ class b2drop::php (
         package { 'yum-plugin-replace':
           ensure  => 'installed',
           require => Exec['import-webtatic-gpgkey'],
-          notify  => Exec['substitute-php-php70w'],
+          notify  => Exec['substitute-php-php72w'],
         }
 
-        exec { 'substitute-php-php70w':
+        exec { 'substitute-php-php72w':
           refreshonly => true,
           path        => '/bin:/usr/bin:/sbin:/usr/sbin',
           command     => 'yum replace -y php-common
-          --replace-with=php70w-common',
+          --replace-with=php72w-common',
           require     => Package['yum-plugin-replace'],
         }
       }
