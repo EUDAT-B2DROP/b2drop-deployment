@@ -42,7 +42,7 @@
       "version_requirement": "0.4.0"
     },
     {
-      "name": "yo/logrotate",
+      "name": "yo61/logrotate",
       "version_requirement": "1.4.0"
     }
   ],
