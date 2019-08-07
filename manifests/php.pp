@@ -19,7 +19,8 @@ class b2drop::php (
   case $::osfamily {
     'RedHat': {
       if $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == '7'{
-        $phpmodules = [ 'php70w', 'php70w-gd', 'php70w-mbstring', 'php70w-intl', 'php70w-pecl-apcu', 'php70w-mysql', 'php70w-opcache',  'php70w-mcrypt']
+        $phpmodules = [ 'php70w', 'php70w-gd', 'php70w-mbstring', 'php70w-intl', 'php70w-pecl-apcu', 'php70w-mysql', 'php70w-opcache',
+            'php70w-mcrypt']
         $gpg_path = '/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7'
         yumrepo { 'webtatic':
           mirrorlist     => 'https://mirror.webtatic.com/yum/el7/$basearch/mirrorlist',
@@ -93,8 +94,8 @@ class b2drop::php (
 
   package {$phpmodules:
     ensure => 'installed',
-  } ->
-  augeas { 'php.ini':
+  }
+  -> augeas { 'php.ini':
     context => '/files/etc/php.ini/PHP',
     changes => [
       'set default_charset UTF-8',
@@ -103,14 +104,14 @@ class b2drop::php (
       'set post_max_size 8G',
       'set expose_php Off',
     ];
-  } ->
-  augeas { 'apcu.ini':
+  }
+  -> augeas { 'apcu.ini':
     context => '/files/etc/php.d/apcu.ini/.anon',
     changes => [
       'set apc.enable_cli 1',
     ];
-  } ->
-  augeas { 'opcache.ini':
+  }
+  -> augeas { 'opcache.ini':
     context => '/files/etc/php.d/opcache.ini/.anon',
     changes => [
       'set opcache.enable 1',

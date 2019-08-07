@@ -35,13 +35,13 @@ class b2drop::nextcloud (
     path    => '/usr/bin:/usr/sbin:/bin',
     command => "mkdir -p ${::b2drop::documentroot}",
     unless  => "test -d ${::b2drop::documentroot}",
-  } ->
-  file {"${::b2drop::documentroot}":
+  }
+  -> file {"${::b2drop::documentroot}":
     ensure => 'directory',
     owner  => $::apache::params::user,
     group  => $::apache::params::group,
-  } ->
-  file {"${::b2drop::documentroot}/apps":
+  }
+  -> file {"${::b2drop::documentroot}/apps":
     ensure => 'directory',
     owner  => $::apache::params::user,
     group  => $::apache::params::group,
@@ -52,8 +52,8 @@ class b2drop::nextcloud (
     path    => '/usr/bin:/usr/sbin:/bin',
     command => "mkdir -p ${::b2drop::datadirectory}",
     unless  => "test -d ${::b2drop::datadirectory}",
-  } ->
-  file {"${::b2drop::datadirectory}":
+  }
+  -> file {"${::b2drop::datadirectory}":
     ensure => 'directory',
     owner  => $::apache::params::user,
     group  => $::apache::params::group,
