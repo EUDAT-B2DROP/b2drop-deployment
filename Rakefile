@@ -44,7 +44,7 @@ PuppetLint::RakeTask.new :lint do |config|
   config.disable_checks = ["80chars", "arrow_alignment", "class_inherits_from_params_class", "class_parameter_defaults", "only_variable_string"]
   config.fail_on_warnings = true
   config.ignore_paths = exclude_paths
-  config.log_format = '%{path}:%{linenumber}:%{KIND}: %{message}'
+  config.log_format = '%{path}:%{line}:%{KIND}: %{message}'
 end
 
 PuppetSyntax.exclude_paths = exclude_paths
