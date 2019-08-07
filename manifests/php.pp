@@ -93,8 +93,8 @@ class b2drop::php (
 
   package {$phpmodules:
     ensure => 'installed',
-  } ->
-  augeas { 'php.ini':
+  }
+  -> augeas { 'php.ini':
     context => '/files/etc/php.ini/PHP',
     changes => [
       'set default_charset UTF-8',
@@ -103,14 +103,14 @@ class b2drop::php (
       'set post_max_size 8G',
       'set expose_php Off',
     ];
-  } ->
-  augeas { 'apcu.ini':
+  }
+  -> augeas { 'apcu.ini':
     context => '/files/etc/php.d/apcu.ini/.anon',
     changes => [
       'set apc.enable_cli 1',
     ];
-  } ->
-  augeas { 'opcache.ini':
+  }
+  -> augeas { 'opcache.ini':
     context => '/files/etc/php.d/opcache.ini/.anon',
     changes => [
       'set opcache.enable 1',
