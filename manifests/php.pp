@@ -102,6 +102,7 @@ class b2drop::php (
       'set upload_max_filesize 8G',
       'set post_max_size 8G',
       'set expose_php Off',
+      'set memory_limit 1G',
     ];
   }
   -> augeas { 'apcu.ini':
