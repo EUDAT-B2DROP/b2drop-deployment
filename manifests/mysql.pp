@@ -34,6 +34,10 @@
 # [*monitoring_host*]
 #   Optional: which host to allow monitoring, default localhost
 #
+# [*db_directory*]
+#   Optional: directory where the database is located, if it is unset the mysql
+#   default will be used. Default is unset
+#
 class b2drop::mysql (
   $nextcloud_password,
   $root_password,
@@ -41,11 +45,25 @@ class b2drop::mysql (
   $backup_password,
   $backup_directory = '/usr/local/mysqldumps',
   $backup_compress = false,
-  $monitoring_host = 'localhost'
+  $monitoring_host = 'localhost',
+  $db_directory = unset
 ){
+  validate_absolute_path($db_directory)
+
+  if $db_directory {
+    file{ $db_directory:
+      ensure => directory,
+      owner  => $::mysql::params::mysql_group,
+      group  => $::mysql::params::mysql_group,
+    }
+  }
+
   $override_options = {
     'mysqld' => {
       'performance_schema' => 'on',
+      if $db_directory {
+      'datadir'            => $db_directory,
+      }
     }
   }
 
