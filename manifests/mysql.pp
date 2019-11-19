@@ -36,7 +36,7 @@
 #
 # [*db_directory*]
 #   Optional: directory where the database is located, if it is unset the mysql
-#   default will be used. Default is unset
+#   default will be used. Default is undef
 #
 class b2drop::mysql (
   $nextcloud_password,
@@ -46,7 +46,7 @@ class b2drop::mysql (
   $backup_directory = '/usr/local/mysqldumps',
   $backup_compress = false,
   $monitoring_host = 'localhost',
-  $db_directory
+  $db_directory = undef
 ){
     if $db_directory {
     validate_absolute_path($db_directory)
