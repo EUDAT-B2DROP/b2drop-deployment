@@ -46,7 +46,7 @@ class b2drop::mysql (
   $backup_directory = '/usr/local/mysqldumps',
   $backup_compress = false,
   $monitoring_host = 'localhost',
-  $db_directory = unset
+  $db_directory
 ){
     if $db_directory {
     validate_absolute_path($db_directory)
