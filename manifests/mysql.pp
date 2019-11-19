@@ -56,13 +56,17 @@ class b2drop::mysql (
       owner  => $::mysql::params::mysql_group,
       group  => $::mysql::params::mysql_group,
     }
-  }
 
-  $override_options = {
-    'mysqld' => {
-      'performance_schema' => 'on',
-      if $db_directory {
-      'datadir'            => $db_directory,
+    $override_options = {
+      'mysqld' => {
+        'performance_schema' => 'on',
+        'datadir'            => "'${db_directory}'",
+      }
+    }
+  }else{
+    $override_options = {
+      'mysqld' => {
+        'performance_schema' => 'on',
       }
     }
   }
