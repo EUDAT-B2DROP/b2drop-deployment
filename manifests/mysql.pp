@@ -48,9 +48,8 @@ class b2drop::mysql (
   $monitoring_host = 'localhost',
   $db_directory = unset
 ){
-  validate_absolute_path($db_directory)
-
-  if $db_directory {
+    if $db_directory {
+    validate_absolute_path($db_directory)
     file{ $db_directory:
       ensure => directory,
       owner  => $::mysql::params::mysql_group,
