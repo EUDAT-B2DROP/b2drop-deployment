@@ -59,7 +59,7 @@ class b2drop::mysql (
     $override_options = {
       'mysqld' => {
         'performance_schema' => 'on',
-        'datadir'            => $db_directory},
+        'datadir'            => $db_directory,
       }
     }
   }else{
