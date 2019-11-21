@@ -62,18 +62,4 @@ class b2drop::selinux (
       require     => File[$::b2drop::manage_tmp]
     }
   }
-
-  if $::b2drop::mysql::db_directory {
-    selinux::fcontext{ 'mysql_datadircontent_mysql_context':
-      context  => 'mysqld_db_t',
-      pathname => "${::b2drop::mysql::db_directory}(/.*)?",
-      notify   => Exec['mysql_set_datadircontent_mysql_context'],
-      require  => File["${::b2drop::mysql::db_directory}"]
-    }
-    exec{ 'mysql_set_datadircontent_mysql_context':
-      command     => "/sbin/restorecon -Rv ${::b2drop::mysql::db_directory}",
-      refreshonly => true,
-      require     => File["${b2drop::mysql::db_directory}"]
-    }
-  }
 }
