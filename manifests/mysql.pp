@@ -31,6 +31,9 @@
 # [*backup_compress*]
 #   Optional: whether to compress dumps, default false
 #
+# [*backup_max_allowed_packet*]
+#   Optional: set max allowed packet size, default 1M
+#
 # [*monitoring_host*]
 #   Optional: which host to allow monitoring, default localhost
 #
@@ -45,6 +48,7 @@ class b2drop::mysql (
   $backup_password,
   $backup_directory = '/usr/local/mysqldumps',
   $backup_compress = false,
+  $backup_max_allowed_packet = '1M',
   $monitoring_host = 'localhost',
   $db_directory = undef
 ){
@@ -81,10 +85,11 @@ class b2drop::mysql (
     mysql_monitor_hostname => $monitoring_host
   }
   class { '::mysql::server::backup':
-    backupuser     => 'backup',
-    backuppassword => $backup_password,
-    backupdir      => $backup_directory,
-    backupcompress => false
+    backupuser       => 'backup',
+    backuppassword   => $backup_password,
+    backupdir        => $backup_directory,
+    backupcompress   => false,
+    maxallowedpacket => $backup_max_allowed_packet
   }
 
   mysql::db { 'nextcloud':
