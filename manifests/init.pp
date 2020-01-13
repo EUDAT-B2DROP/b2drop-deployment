@@ -152,7 +152,7 @@ class b2drop (
     backup_password           => $mysql_backup_password,
     backup_directory          => $mysql_backup_directory,
     backup_compress           => $mysql_backup_compress,
-    backup_max_allowed_packet => $backup_max_allowed_packet,
+    backup_max_allowed_packet => $mysql_backup_max_allowed_packet,
     monitoring_host           => $mysql_monitoring_host
   }
 
