@@ -83,6 +83,9 @@
 # [*mysql_backup_compress*]
 #   Optional: whether to compress dumps, default false
 #
+# [*mysql_backup_max_allowed_packet*]
+#   Optional: set max allowed packet size, default 1M
+#
 # [*mysql_monitoring_host*]
 #   Optional: which host to allow monitoring, default localhost
 #
@@ -103,23 +106,24 @@ class b2drop (
   $mysql_root_password,
   $mysql_monitoring_password,
   $mysql_backup_password,
-  $apache_bind_interface  = 'em1',
-  $apache_servername      = 'b2drop.eudat.eu',
-  $autoupdate_theme       = false,
-  $branch_theme           = 'master',
-  $gitrepo_user_theme     = 'EUDAT-B2DROP',
-  $autoupdate_plugin      = false,
-  $branch_plugin          = 'master',
-  $gitrepo_user_plugin    = 'EUDAT-B2DROP',
-  $documentroot           = '/var/www/nextcloud',
-  $datadirectory          = "${documentroot}/data",
-  $manage_cron            = true,
-  $manage_php             = true,
-  $manage_selinux         = true,
-  $manage_tmp             = false,
-  $mysql_backup_directory = '/usr/local/mysqldumps',
-  $mysql_backup_compress  = false,
-  $mysql_monitoring_host  = 'localhost',
+  $apache_bind_interface           = 'em1',
+  $apache_servername               = 'b2drop.eudat.eu',
+  $autoupdate_theme                = false,
+  $branch_theme                    = 'master',
+  $gitrepo_user_theme              = 'EUDAT-B2DROP',
+  $autoupdate_plugin               = false,
+  $branch_plugin                   = 'master',
+  $gitrepo_user_plugin             = 'EUDAT-B2DROP',
+  $documentroot                    = '/var/www/nextcloud',
+  $datadirectory                   = "${documentroot}/data",
+  $manage_cron                     = true,
+  $manage_php                      = true,
+  $manage_selinux                  = true,
+  $manage_tmp                      = false,
+  $mysql_backup_directory          = '/usr/local/mysqldumps',
+  $mysql_backup_compress           = false,
+  $mysql_backup_max_allowed_packet = '1M',
+  $mysql_monitoring_host           = 'localhost',
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
@@ -142,13 +146,14 @@ class b2drop (
     servername     => $apache_servername
   }
   class { '::b2drop::mysql':
-    nextcloud_password  => $mysql_nextcloud_password,
-    root_password       => $mysql_root_password,
-    monitoring_password => $mysql_monitoring_password,
-    backup_password     => $mysql_backup_password,
-    backup_directory    => $mysql_backup_directory,
-    backup_compress     => $mysql_backup_compress,
-    monitoring_host     => $mysql_monitoring_host
+    nextcloud_password        => $mysql_nextcloud_password,
+    root_password             => $mysql_root_password,
+    monitoring_password       => $mysql_monitoring_password,
+    backup_password           => $mysql_backup_password,
+    backup_directory          => $mysql_backup_directory,
+    backup_compress           => $mysql_backup_compress,
+    backup_max_allowed_packet => $backup_max_allowed_packet,
+    monitoring_host           => $mysql_monitoring_host
   }
 
   include ::b2drop::misc
