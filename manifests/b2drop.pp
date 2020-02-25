@@ -92,11 +92,4 @@ class b2drop::b2drop (
     group    => $::apache::params::group,
     require  => [ Package['git'], File["${::b2drop::documentroot}/themes"] ],
   }
-
-  file {"${::b2drop::documentroot}/apps/notifications/img/notifications-new.svg":
-    ensure => 'present',
-    source => 'puppet:///modules/b2drop/notifications-new.svg',
-    owner  => $::apache::params::user,
-    group  => $::apache::params::group,
-  }
 }
