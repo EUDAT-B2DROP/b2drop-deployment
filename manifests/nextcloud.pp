@@ -69,7 +69,7 @@ class b2drop::nextcloud (
     delaycompress => true,
     rotate        => 14,
     create        => true,
-    create_mode   => 640,
+    create_mode   => '0640',
     create_owner  => $::apache::params::user,
     create_group  => $::apache::params::group,
     su            => true,
