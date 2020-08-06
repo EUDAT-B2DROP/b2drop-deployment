@@ -73,7 +73,7 @@ class b2drop::nextcloud (
     create_owner  => $::apache::params::user,
     create_group  => $::apache::params::group,
     su            => true,
-    su_owner      => $::apache::params::user,
+    su_user       => $::apache::params::user,
     su_group      => $::apache::params::group,
   }
 }
