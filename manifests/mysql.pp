@@ -34,6 +34,9 @@
 # [*backup_max_allowed_packet*]
 #   Optional: set max allowed packet size, default 1M
 #
+# [*max_connections*]
+#   Optional: set the number of max allowed connections, default 151
+#
 # [*monitoring_host*]
 #   Optional: which host to allow monitoring, default localhost
 #
@@ -49,6 +52,7 @@ class b2drop::mysql (
   $backup_directory = '/usr/local/mysqldumps',
   $backup_compress = false,
   $backup_max_allowed_packet = '1M',
+  $max_connections = 151,
   $monitoring_host = 'localhost',
   $db_directory = undef
 ){
@@ -64,12 +68,14 @@ class b2drop::mysql (
       'mysqld' => {
         'performance_schema' => 'on',
         'datadir'            => $db_directory,
+        'max_connections'    => $max_connections,
       }
     }
   }else{
     $override_options = {
       'mysqld' => {
         'performance_schema' => 'on',
+        'max_connections'    => $max_connections,
       }
     }
   }
