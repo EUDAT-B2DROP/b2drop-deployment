@@ -86,6 +86,9 @@
 # [*mysql_backup_max_allowed_packet*]
 #   Optional: set max allowed packet size, default 1M
 #
+# [*mysql_max_connections*]
+#   Optional: set max connections, default 151
+#
 # [*mysql_monitoring_host*]
 #   Optional: which host to allow monitoring, default localhost
 #
@@ -123,6 +126,7 @@ class b2drop (
   $mysql_backup_directory          = '/usr/local/mysqldumps',
   $mysql_backup_compress           = false,
   $mysql_backup_max_allowed_packet = '1M',
+  $mysql_max_connections           = 151,
   $mysql_monitoring_host           = 'localhost',
 ){
   validate_bool($autoupdate_theme)
@@ -130,6 +134,7 @@ class b2drop (
   validate_bool($manage_cron)
   validate_bool($manage_php)
   validate_bool($manage_selinux)
+  validate_integer($mysql_max_connections)
 
   if $manage_php {
     include ::b2drop::php
@@ -153,6 +158,7 @@ class b2drop (
     backup_directory          => $mysql_backup_directory,
     backup_compress           => $mysql_backup_compress,
     backup_max_allowed_packet => $mysql_backup_max_allowed_packet,
+    max_connections           => $mysql_max_connections,
     monitoring_host           => $mysql_monitoring_host
   }
 
