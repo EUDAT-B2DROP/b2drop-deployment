@@ -128,6 +128,8 @@ class b2drop (
   $mysql_backup_max_allowed_packet = '1M',
   $mysql_max_connections           = 151,
   $mysql_monitoring_host           = 'localhost',
+  $mysql_connect_timeout           = 60,
+  $mysql_wait_timeout              = 1000,
 ){
   validate_bool($autoupdate_theme)
   validate_bool($autoupdate_plugin)
@@ -135,6 +137,8 @@ class b2drop (
   validate_bool($manage_php)
   validate_bool($manage_selinux)
   validate_integer($mysql_max_connections)
+  validate_integer($mysql_connect_timeout)
+  validate_integer($mysql_wait_timeout)
 
   if $manage_php {
     include ::b2drop::php
@@ -159,7 +163,9 @@ class b2drop (
     backup_compress           => $mysql_backup_compress,
     backup_max_allowed_packet => $mysql_backup_max_allowed_packet,
     max_connections           => $mysql_max_connections,
-    monitoring_host           => $mysql_monitoring_host
+    monitoring_host           => $mysql_monitoring_host,
+    connect_timeout           => $mysql_connect_timeout,
+    wait_timeout              => $mysql_wait_timeout
   }
 
   include ::b2drop::misc
