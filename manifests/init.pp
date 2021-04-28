@@ -92,6 +92,11 @@
 # [*mysql_monitoring_host*]
 #   Optional: which host to allow monitoring, default localhost
 #
+# [*mysql_connect_timeout*]
+#   Number of secconds waiting after an unsecsessfull handshake. Default 60
+#
+# [*mysql_wait_timeout*]
+#   Number of seconds waiting for activity after a connection became inactive but not closed. Default 1000
 # === Authors
 #
 # Benedikt von St. Vieth <b.von.st.vieth@fz-juelich.de>
