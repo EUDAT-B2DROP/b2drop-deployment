@@ -44,6 +44,12 @@
 #   Optional: directory where the database is located, if it is unset the mysql
 #   default will be used. Default is undef
 #
+# [*connect_timeout*]
+#   Number of secconds waiting after an unsecsessfull handshake. Default 60
+#
+# [*wait_timeout*]
+#   Number of seconds waiting for activity after a connection became inactive but not closed. Default 1000
+#
 class b2drop::mysql (
   $nextcloud_password,
   $root_password,
@@ -54,7 +60,9 @@ class b2drop::mysql (
   $backup_max_allowed_packet = '1M',
   $max_connections = 151,
   $monitoring_host = 'localhost',
-  $db_directory = undef
+  $db_directory = undef,
+  $connect_timeout = 60,
+  $wait_timeout = 1000
 ){
     if $db_directory {
     validate_absolute_path($db_directory)
@@ -69,6 +77,8 @@ class b2drop::mysql (
         'performance_schema' => 'on',
         'datadir'            => $db_directory,
         'max_connections'    => $max_connections,
+        'connect_timeout'    => $connect_timeout,
+        'wait_timeout'       => $wait_timeout,
       }
     }
   }else{
@@ -76,6 +86,8 @@ class b2drop::mysql (
       'mysqld' => {
         'performance_schema' => 'on',
         'max_connections'    => $max_connections,
+        'connect_timeout'    => $connect_timeout,
+        'wait_timeout'       => $wait_timeout,
       }
     }
   }
