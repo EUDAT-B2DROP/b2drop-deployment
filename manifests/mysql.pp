@@ -97,11 +97,11 @@ class b2drop::mysql (
     root_password           => $root_password,
     override_options        => $override_options
   }
-  class { '::mysql::server::monitor':
-    mysql_monitor_username => 'monitoring',
-    mysql_monitor_password => $monitoring_password,
-    mysql_monitor_hostname => $monitoring_host
-  }
+#  class { '::mysql::server::monitor':
+#    mysql_monitor_username => 'monitoring',
+#    mysql_monitor_password => $monitoring_password,
+#    mysql_monitor_hostname => $monitoring_host
+#  }
   class { '::mysql::server::backup':
     backupuser       => 'backup',
     backuppassword   => $backup_password,
