@@ -75,13 +75,14 @@ class b2drop::apache (
     docroot       => $::b2drop::documentroot,
     docroot_owner => $::apache::params::user,
     docroot_group => $::apache::params::group,
-    directories   => {
-      path            => '/var/www/nextcloud',
+    directories   => [
+      { path          => '/var/www/nextcloud',
       options         => ['Indexes', 'FollowSymLinks', 'MultiViews'],
       allow_override  => 'All',
       custom_fragment => 'Dav Off',
       require         => 'all granted',
-    },
+      },
+     ],
     ssl           => true,
     ssl_cert      => $ssl_cert,
     ssl_chain     => $ssl_chain,
