@@ -1,3 +1,5 @@
+The module is not maintained anymore and archived.
+
 # B2DROP deployment recipes for puppet
 
 [![Build Status](https://travis-ci.org/EUDAT-B2DROP/b2drop-puppet.svg?branch=master)](https://travis-ci.org/EUDAT-B2DROP/b2drop-puppet)
